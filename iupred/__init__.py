@@ -24,12 +24,27 @@ __all__ = [
     # AIUPred functions
     'aiupred_disorder',
     'aiupred_binding',
+    # AIUPred batch processing
+    'init_aiupred_models',
+    'predict_aiupred_disorder',
+    'predict_aiupred_binding',
+    # AIUPred low-memory functions
+    'low_memory_aiupred_disorder',
+    'low_memory_aiupred_binding',
     # Data management
     'ensure_aiupred_data',
     'clear_aiupred_cache',
 ]
 
-from .aiupred import aiupred_binding, aiupred_disorder
+from .aiupred import (
+    init_models as init_aiupred_models,
+    aiupred_binding,
+    predict_binding as predict_aiupred_binding,
+    aiupred_disorder,
+    predict_disorder as predict_aiupred_disorder,
+    low_memory_predict_binding as low_memory_aiupred_binding,
+    low_memory_predict_disorder as low_memory_aiupred_disorder,
+)
 from .iupred2a import iupred, anchor2
 from ._download import (
     clear_cache as clear_aiupred_cache,

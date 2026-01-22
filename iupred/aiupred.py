@@ -173,13 +173,29 @@ def tokenize(sequence, device):
 def predict_disorder(
     sequence, energy_model, regression_model, device, smoothing=None
 ):
-    """Predict disorder propensity from a sequence using a transformer and a regression model
-    :param sequence: Amino acid sequence in string
-    :param energy_model: Transformer model
-    :param regression_model: regression model
-    :param device: Device to run on. CUDA{x} or CPU
-    :param smoothing: Use the SavGol filter to smooth the output
-    :return:
+    """Predict disorder propensity using pre-initialized models.
+
+    This function is useful for batch processing multiple sequences
+    efficiently, as the models are initialized once and reused.
+
+    Args:
+        sequence: Amino acid sequence as a string.
+        energy_model: Pre-initialized transformer model from
+            :func:`init_aiupred_models`.
+        regression_model: Pre-initialized regression model from
+            :func:`init_aiupred_models`.
+        device: PyTorch device (CPU or CUDA) from :func:`init_aiupred_models`.
+        smoothing: If ``True``, apply Savitzky-Golay filter to smooth
+            the output. Default is ``None`` (no smoothing).
+
+    Returns:
+        numpy.ndarray: Disorder propensity scores (0.0-1.0) for each residue.
+
+    Example:
+        >>> from iupred import init_aiupred_models, predict_aiupred_disorder
+        >>> model, reg, device = init_aiupred_models('disorder')
+        >>> for seq in sequences:
+        ...     scores = predict_aiupred_disorder(seq, model, reg, device, smoothing=True)
     """
     predicted_energies = calculate_energy(sequence, energy_model, device)
     padded_energies = pad(
@@ -218,6 +234,34 @@ def predict_binding(
     energy_only=False,
     binding=False,
 ):
+    """Predict binding propensity using pre-initialized models.
+
+    This function is useful for batch processing multiple sequences
+    efficiently, as the models are initialized once and reused.
+
+    Args:
+        sequence: Amino acid sequence as a string.
+        embedding_model: Pre-initialized embedding model from
+            :func:`init_aiupred_models` with ``prediction_type='binding'``.
+        decoder_model: Pre-initialized decoder model from
+            :func:`init_aiupred_models`.
+        device: PyTorch device (CPU or CUDA) from :func:`init_aiupred_models`.
+        smoothing: If ``True``, apply Savitzky-Golay filter to smooth
+            the output. Default is ``None`` (no smoothing).
+        energy_only: If ``True``, return raw energy embeddings instead
+            of binding predictions. Default is ``False``.
+        binding: If ``True``, apply binding transformation to scores.
+            Should be ``True`` for final binding predictions.
+
+    Returns:
+        numpy.ndarray: Binding propensity scores (0.0-1.0) for each residue
+        when ``binding=True``, or raw predictions otherwise.
+
+    Example:
+        >>> from iupred import init_aiupred_models, predict_aiupred_binding
+        >>> model, reg, device = init_aiupred_models('binding')
+        >>> scores = predict_aiupred_binding(seq, model, reg, device, binding=True, smoothing=True)
+    """
     _tokens = tokenize(sequence, device)
     _padded_token = pad(_tokens, (WINDOW // 2, WINDOW // 2), 'constant', 0)
     _unfolded_tokes = _padded_token.unfold(0, WINDOW + 1, 1)
@@ -245,6 +289,39 @@ def low_memory_predict_disorder(
     smoothing=None,
     chunk_len=1000,
 ):
+    """Predict disorder using chunked processing for long sequences.
+
+    This function processes sequences in overlapping chunks to reduce
+    memory usage. Useful for very long sequences (>3000 residues) or
+    systems with limited GPU memory.
+
+    Note:
+        Results may differ slightly from the standard prediction due to
+        chunk boundary effects.
+
+    Args:
+        sequence: Amino acid sequence as a string.
+        embedding_model: Pre-initialized transformer model from
+            :func:`init_aiupred_models`.
+        decoder_model: Pre-initialized regression model from
+            :func:`init_aiupred_models`.
+        device: PyTorch device (CPU or CUDA) from :func:`init_aiupred_models`.
+        smoothing: If ``True``, apply Savitzky-Golay filter to smooth
+            the output. Default is ``None`` (no smoothing).
+        chunk_len: Length of each processing chunk. Default is 1000.
+            Must be greater than 200 (the overlap size is 100).
+
+    Returns:
+        numpy.ndarray: Disorder propensity scores (0.0-1.0) for each residue.
+
+    Raises:
+        ValueError: If chunk_len is less than or equal to 200.
+
+    Example:
+        >>> from iupred import init_aiupred_models, low_memory_aiupred_disorder
+        >>> model, reg, device = init_aiupred_models('disorder')
+        >>> scores = low_memory_aiupred_disorder(long_sequence, model, reg, device, smoothing=True)
+    """
     overlap = 100
     if (len(sequence) - 1) % (chunk_len - overlap) == 0:
         logging.warning('Chunk length decreased by 1 to fit sequence length')
@@ -280,6 +357,39 @@ def low_memory_predict_binding(
     smoothing=None,
     chunk_len=1000,
 ):
+    """Predict binding using chunked processing for long sequences.
+
+    This function processes sequences in overlapping chunks to reduce
+    memory usage. Useful for very long sequences (>3000 residues) or
+    systems with limited GPU memory.
+
+    Note:
+        Results may differ slightly from the standard prediction due to
+        chunk boundary effects.
+
+    Args:
+        sequence: Amino acid sequence as a string.
+        embedding_model: Pre-initialized embedding model from
+            :func:`init_aiupred_models` with ``prediction_type='binding'``.
+        decoder_model: Pre-initialized decoder model from
+            :func:`init_aiupred_models`.
+        device: PyTorch device (CPU or CUDA) from :func:`init_aiupred_models`.
+        smoothing: If ``True``, apply Savitzky-Golay filter to smooth
+            the output. Default is ``True``.
+        chunk_len: Length of each processing chunk. Default is 1000.
+            Must be greater than 200 (the overlap size is 100).
+
+    Returns:
+        numpy.ndarray: Binding propensity scores (0.0-1.0) for each residue.
+
+    Raises:
+        ValueError: If chunk_len is less than or equal to 200.
+
+    Example:
+        >>> from iupred import init_aiupred_models, low_memory_aiupred_binding
+        >>> model, reg, device = init_aiupred_models('binding')
+        >>> scores = low_memory_aiupred_binding(long_sequence, model, reg, device, smoothing=True)
+    """
     overlap = 100
     if chunk_len <= overlap:
         raise ValueError('Chunk len must be bigger than 200!')

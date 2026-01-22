@@ -111,7 +111,7 @@ def _download_and_extract():
 
 
 def ensure_aiupred_data():
-    """Ensure AIUPred model weights are available, downloading if necessary.
+    r"""Ensure AIUPred model weights are available, downloading if necessary.
 
     This function checks if all required AIUPred model files are present
     in the cache directory. If not, it downloads and extracts them from
