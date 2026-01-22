@@ -24,9 +24,15 @@ __all__ = [
     # AIUPred functions
     'aiupred_disorder',
     'aiupred_binding',
-    'configure_model_urls',
+    # Data management
+    'ensure_aiupred_data',
+    'clear_aiupred_cache',
 ]
 
+from .aiupred import aiupred_binding, aiupred_disorder
+from .iupred2a import iupred, anchor2
+from ._download import (
+    clear_cache as clear_aiupred_cache,
+    ensure_aiupred_data,
+)
 from ._metadata import __author__, __version__
-from .iupred2a import anchor2, iupred
-from .aiupred_lib import aiupred_binding, aiupred_disorder, configure_model_urls

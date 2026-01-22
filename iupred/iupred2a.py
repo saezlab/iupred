@@ -1,10 +1,11 @@
 #!/usr/bin/python3
 """IUPred2 and ANCHOR2 prediction of intrinsically disordered regions."""
 
-import math
 import os
-import textwrap
+import math
 from pathlib import Path
+import textwrap
+
 
 # Default data directory (bundled with the package)
 DATA_DIR = Path(__file__).parent / 'data'
@@ -28,7 +29,7 @@ def aa_freq(_seq):
 
 def read_matrix(matrix_file):
     _mtx = {}
-    with open(matrix_file, "r") as _fhm:
+    with open(matrix_file) as _fhm:
         for _line in _fhm:
             if _line.split()[0] in _mtx:
                 _mtx[_line.split()[0]][_line.split()[1]] = float(_line.split()[2])
@@ -40,11 +41,11 @@ def read_matrix(matrix_file):
 
 def read_histo(histo_file):
     hist = []
-    h_min = float("inf")
-    h_max = -float("inf")
-    with open(histo_file, "r") as fnh:
+    h_min = float('inf')
+    h_max = -float('inf')
+    with open(histo_file) as fnh:
         for _line in fnh:
-            if _line.startswith("#"):
+            if _line.startswith('#'):
                 continue
             if float(_line.split()[1]) < h_min:
                 h_min = float(_line.split()[1])
@@ -63,11 +64,11 @@ def smooth(energy_list, window):
 
 
 def read_seq(fasta_file):
-    _seq = ""
-    if fasta_file.endswith(".fasta"):
+    _seq = ''
+    if fasta_file.endswith('.fasta'):
         with open(fasta_file) as file_handler:
             for _line in file_handler:
-                if _line.startswith(">"):
+                if _line.startswith('>'):
                     continue
                 _seq += _line.strip()
 
@@ -88,7 +89,7 @@ def iupred(seq, mode='short', folder=None):
     """
     if folder is None:
         folder = DATA_DIR
-    if mode == "short":
+    if mode == 'short':
         lc = 1
         uc = 25
         wc = 10
@@ -136,7 +137,7 @@ def iupred(seq, mode='short', folder=None):
     else:
         weighted_energy_score = smooth(unweighted_energy_score, wc)
 
-    glob_text = ""
+    glob_text = ''
     if mode == 'glob':
         gr = []
         in_gr = False
@@ -179,16 +180,16 @@ def iupred(seq, mode='short', folder=None):
                     end = gr[k][1]
         seq = seq.lower()
         nr = 0
-        res = ""
+        res = ''
         for i in mgr:
             res += seq[nr:i[0]] + seq[i[0]:i[1] + 1].upper()
             nr = i[1] + 1
         res += seq[nr:]
-        res = " ".join([res[i:i + 10] for i in range(0, len(res), 10)])
-        glob_text += "Number of globular domains: {}\n".format(len(mgr))
+        res = ' '.join([res[i:i + 10] for i in range(0, len(res), 10)])
+        glob_text += 'Number of globular domains: {}\n'.format(len(mgr))
         for n, i in enumerate(mgr):
-            glob_text += "          globular domain   {}.\t{}-{}\n".format(n + 1, i[0] + 1, i[1] + 1)
-        glob_text += "\n".join(textwrap.wrap(res, 70))
+            glob_text += '          globular domain   {}.\t{}-{}\n'.format(n + 1, i[0] + 1, i[1] + 1)
+        glob_text += '\n'.join(textwrap.wrap(res, 70))
 
     for idx, val in enumerate(weighted_energy_score):
         if val <= histo_min + 2 * histo_step:

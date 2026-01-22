@@ -1,35 +1,25 @@
 """AIUPred: Transformer-based prediction of intrinsically disordered regions."""
 
-import logging
 import math
-import os
-import urllib.request
-import warnings
+import logging
 from pathlib import Path
+import warnings
 
 import numpy as np
 import torch
-from scipy.signal import savgol_filter
 from torch import Tensor, nn
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
+from scipy.signal import savgol_filter
 from torch.nn.functional import pad
 
-warnings.filterwarnings("ignore")
+from ._download import get_aiupred_file
 
-# Package and cache directories
+
+warnings.filterwarnings('ignore')
+
+# Package data directory (for IUPred2 data, not AIUPred models)
 PACKAGE_DIR = Path(__file__).parent
 DATA_DIR = PACKAGE_DIR / 'data'
-CACHE_DIR = Path.home() / '.cache' / 'iupred'
-
-# Model file URLs (to be configured)
-# These will be set to actual URLs when hosting is configured
-MODEL_URLS = {
-    'embedding_disorder.pt': None,  # URL placeholder
-    'disorder_decoder.pt': None,  # URL placeholder
-    'embedding_binding.pt': None,  # URL placeholder
-    'binding_decoder.pt': None,  # URL placeholder
-    'binding_transform': None,  # URL placeholder
-}
 
 AA_CODE = [
     'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L',
@@ -38,80 +28,8 @@ AA_CODE = [
 WINDOW = 100
 
 
-def _ensure_data_dir():
-    """Ensure the cache directory exists."""
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
-
-
-def _get_model_path(filename):
-    """Get the path to a model file, downloading if necessary.
-
-    Args:
-        filename: Name of the model file.
-
-    Returns:
-        Path to the model file.
-
-    Raises:
-        FileNotFoundError: If the model is not available and URL is not configured.
-    """
-    # First check package data directory
-    package_path = DATA_DIR / filename
-    if package_path.exists():
-        return package_path
-
-    # Then check cache directory
-    cache_path = CACHE_DIR / filename
-    if cache_path.exists():
-        return cache_path
-
-    # Try to download
-    url = MODEL_URLS.get(filename)
-    if url is None:
-        raise FileNotFoundError(
-            f"Model file '{filename}' not found. "
-            f"AIUPred model weights must be downloaded separately. "
-            f"Please visit https://iupred.elte.hu for more information."
-        )
-
-    _ensure_data_dir()
-    logging.info(f"Downloading {filename} from {url}...")
-    urllib.request.urlretrieve(url, cache_path)
-    logging.info(f"Downloaded {filename} to {cache_path}")
-    return cache_path
-
-
-def configure_model_urls(
-    embedding_disorder=None,
-    disorder_decoder=None,
-    embedding_binding=None,
-    binding_decoder=None,
-    binding_transform=None,
-):
-    """Configure URLs for downloading AIUPred model weights.
-
-    Args:
-        embedding_disorder: URL for embedding_disorder.pt
-        disorder_decoder: URL for disorder_decoder.pt
-        embedding_binding: URL for embedding_binding.pt
-        binding_decoder: URL for binding_decoder.pt
-        binding_transform: URL for binding_transform
-    """
-    if embedding_disorder:
-        MODEL_URLS['embedding_disorder.pt'] = embedding_disorder
-    if disorder_decoder:
-        MODEL_URLS['disorder_decoder.pt'] = disorder_decoder
-    if embedding_binding:
-        MODEL_URLS['embedding_binding.pt'] = embedding_binding
-    if binding_decoder:
-        MODEL_URLS['binding_decoder.pt'] = binding_decoder
-    if binding_transform:
-        MODEL_URLS['binding_transform'] = binding_transform
-
-
 class PositionalEncoding(nn.Module):
-    """
-    Positional encoding for the Transformer network
+    """Positional encoding for the Transformer network
     """
 
     def __init__(self, d_model, max_len=5000):
@@ -130,8 +48,7 @@ class PositionalEncoding(nn.Module):
 
 
 class TransformerModel(nn.Module):
-    """
-    Transformer model to estimate positional contact potential from an amino acid sequence
+    """Transformer model to estimate positional contact potential from an amino acid sequence
     """
 
     def __init__(self):
@@ -198,8 +115,7 @@ class BindingDecoderModel(nn.Module):
 
 
 class DecoderModel(nn.Module):
-    """
-    Regression model to estimate disorder propensity from and energy tensor
+    """Regression model to estimate disorder propensity from and energy tensor
     """
 
     def __init__(self):
@@ -223,8 +139,7 @@ class DecoderModel(nn.Module):
 
 @torch.no_grad()
 def tokenize(sequence, device):
-    """
-    Tokenize an amino acid sequence. Non-standard amino acids are treated as X
+    """Tokenize an amino acid sequence. Non-standard amino acids are treated as X
     :param sequence: Amino acid sequence in string
     :param device: Device to run on. CUDA{x} or CPU
     :return: Tokenized tensors
@@ -233,8 +148,7 @@ def tokenize(sequence, device):
 
 
 def predict_disorder(sequence, energy_model, regression_model, device, smoothing=None):
-    """
-    Predict disorder propensity from a sequence using a transformer and a regression model
+    """Predict disorder propensity from a sequence using a transformer and a regression model
     :param sequence: Amino acid sequence in string
     :param energy_model: Transformer model
     :param regression_model: regression model
@@ -252,8 +166,7 @@ def predict_disorder(sequence, energy_model, regression_model, device, smoothing
 
 
 def calculate_energy(sequence, energy_model, device):
-    """
-    Calculates residue energy from a sequence using a transformer network
+    """Calculates residue energy from a sequence using a transformer network
     :param sequence: Amino acid sequence in string
     :param energy_model: Transformer model
     :param device: Device to run on. CUDA{x} or CPU
@@ -280,7 +193,7 @@ def predict_binding(sequence, embedding_model, decoder_model, device, smoothing=
         return binding_transform(_prediction, smoothing=smoothing)
     if not smoothing or len(sequence) <= 10:
         return _prediction
-    return savgol_filter(transformed_pred, 11, 5)
+    return savgol_filter(_prediction, 11, 5)
 
 
 def low_memory_predict_disorder(sequence, embedding_model, decoder_model, device, smoothing=None, chunk_len=1000):
@@ -289,7 +202,7 @@ def low_memory_predict_disorder(sequence, embedding_model, decoder_model, device
         logging.warning('Chunk length decreased by 1 to fit sequence length')
         chunk_len -= 1
     if chunk_len <= overlap:
-        raise ValueError("Chunk len must be bigger than 200!")
+        raise ValueError('Chunk len must be bigger than 200!')
     overlapping_predictions = []
     for chunk in range(0, len(sequence), chunk_len - overlap):
         overlapping_predictions.append(predict_disorder(
@@ -301,13 +214,13 @@ def low_memory_predict_disorder(sequence, embedding_model, decoder_model, device
     prediction = np.concatenate((overlapping_predictions[0], *[x[overlap:] for x in overlapping_predictions[1:]]))
     if not smoothing or len(sequence) <= 10:
         return prediction
-    return savgol_filter(transformed_pred, 11, 5)
+    return savgol_filter(prediction, 11, 5)
 
 
 def low_memory_predict_binding(sequence, embedding_model, decoder_model, device, smoothing=None, chunk_len=1000):
     overlap = 100
     if chunk_len <= overlap:
-        raise ValueError("Chunk len must be bigger than 200!")
+        raise ValueError('Chunk len must be bigger than 200!')
     overlapping_predictions = []
     for chunk in range(0, len(sequence), chunk_len - overlap):
         overlapping_predictions.append(predict_binding(
@@ -323,7 +236,7 @@ def low_memory_predict_binding(sequence, embedding_model, decoder_model, device,
 
 def binding_transform(prediction, smoothing=True):
     transform = {}
-    binding_transform_path = _get_model_path('binding_transform')
+    binding_transform_path = get_aiupred_file('binding_transform')
     with open(binding_transform_path) as fn:
         for line in fn:
             key, value = line.strip().split()
@@ -338,8 +251,7 @@ def binding_transform(prediction, smoothing=True):
 
 
 def multifasta_reader(file_handler):
-    """
-    (multi) FASTA reader function
+    """(multi) FASTA reader function
     :return: Dictionary with header -> sequence mapping from the file
     """
     sequence_dct = {}
@@ -379,25 +291,25 @@ def init_models(prediction_type, force_cpu=False, gpu_num=0):
 
     if prediction_type == 'disorder':
         embedding_model = TransformerModel()
-        embedding_path = _get_model_path('embedding_disorder.pt')
+        embedding_path = get_aiupred_file('embedding_disorder.pt')
         embedding_model.load_state_dict(
-            torch.load(embedding_path, map_location=device)
+            torch.load(embedding_path, map_location=device, weights_only=True)
         )
         reg_model = DecoderModel()
-        decoder_path = _get_model_path('disorder_decoder.pt')
+        decoder_path = get_aiupred_file('disorder_decoder.pt')
         reg_model.load_state_dict(
-            torch.load(decoder_path, map_location=device)
+            torch.load(decoder_path, map_location=device, weights_only=True)
         )
     else:
         embedding_model = BindingTransformerModel()
-        embedding_path = _get_model_path('embedding_binding.pt')
+        embedding_path = get_aiupred_file('embedding_binding.pt')
         embedding_model.load_state_dict(
-            torch.load(embedding_path, map_location=device)
+            torch.load(embedding_path, map_location=device, weights_only=True)
         )
         reg_model = BindingDecoderModel()
-        decoder_path = _get_model_path('binding_decoder.pt')
+        decoder_path = get_aiupred_file('binding_decoder.pt')
         reg_model.load_state_dict(
-            torch.load(decoder_path, map_location=device)
+            torch.load(decoder_path, map_location=device, weights_only=True)
         )
 
     embedding_model.to(device)
@@ -405,13 +317,12 @@ def init_models(prediction_type, force_cpu=False, gpu_num=0):
 
     reg_model.to(device)
     reg_model.eval()
-    logging.debug("Networks initialized")
+    logging.debug('Networks initialized')
     return embedding_model, reg_model, device
 
 
 def aiupred_disorder(sequence, force_cpu=False, gpu_num=0):
-    """
-    Library function to carry out single sequence analysis
+    """Library function to carry out single sequence analysis
     :param sequence: Amino acid sequence in a string
     """
     embedding_model, reg_model, device = init_models('disorder', force_cpu, gpu_num)
@@ -419,8 +330,7 @@ def aiupred_disorder(sequence, force_cpu=False, gpu_num=0):
 
 
 def aiupred_binding(sequence, force_cpu=False, gpu_num=0):
-    """
-    Library function to carry out single sequence analysis
+    """Library function to carry out single sequence analysis
     :param sequence: Amino acid sequence in a string
     """
     embedding_model, reg_model, device = init_models('binding', force_cpu, gpu_num)
@@ -428,8 +338,7 @@ def aiupred_binding(sequence, force_cpu=False, gpu_num=0):
 
 
 def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
-    """
-    Main function to be called from aiupred.py
+    """Main function to be called from aiupred.py
     :param multifasta_file: Location of (multi) FASTA formatted sequences
     :param force_cpu: Force the method to run on CPU only mode
     :param gpu_num: Index of the GPU to use, default=0
@@ -437,12 +346,12 @@ def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
     """
     embedding_model, reg_model, device = init_models('disorder', force_cpu, gpu_num)
     sequences = multifasta_reader(multifasta_file)
-    logging.debug("Sequences read")
+    logging.debug('Sequences read')
     logging.info(f'{len(sequences)} sequences read')
     if not sequences:
-        raise ValueError("FASTA file is empty")
+        raise ValueError('FASTA file is empty')
     results = {}
-    logging.StreamHandler.terminator = ""
+    logging.StreamHandler.terminator = ''
     for num, (ident, sequence) in enumerate(sequences.items()):
         results[ident] = {}
         results[ident]['aiupred'] = predict_disorder(sequence, embedding_model, reg_model, device, smoothing=True)
@@ -454,5 +363,5 @@ def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
         results[ident]['sequence'] = sequence
         logging.debug(f'{num}/{len(sequences)} sequences done...\r')
     logging.StreamHandler.terminator = '\n'
-    logging.debug(f'Analysis done, writing output')
+    logging.debug('Analysis done, writing output')
     return results

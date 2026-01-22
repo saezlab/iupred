@@ -108,33 +108,37 @@ anchor_scores = anchor2(sequence, disorder_scores)
 - `'long'` - Long disorder prediction, identifies extended disordered regions
 - `'glob'` - Globular domain prediction, locates stable folded regions
 
-### AIUPred (requires model download)
+### AIUPred (automatic model download)
 
 AIUPred uses transformer-based deep learning for enhanced disorder prediction.
-Model weights (~82 MB) must be downloaded separately due to their size.
+Model weights (~82 MB) are automatically downloaded on first use.
 
 ```python
-from iupred import configure_model_urls, aiupred_disorder, aiupred_binding
-
-# Configure model URLs (contact authors for access)
-configure_model_urls(
-    embedding_disorder="https://your-server.com/embedding_disorder.pt",
-    disorder_decoder="https://your-server.com/disorder_decoder.pt",
-    embedding_binding="https://your-server.com/embedding_binding.pt",
-    binding_decoder="https://your-server.com/binding_decoder.pt",
-    binding_transform="https://your-server.com/binding_transform",
-)
+from iupred import aiupred_disorder, aiupred_binding
 
 sequence = "MAEGEITTFTALTEKFNLPPGNYKKPKLLYCSNG..."
 
 # Predict disorder using AIUPred
+# Models are downloaded automatically on first call
 disorder_scores = aiupred_disorder(sequence)
 
 # Predict binding regions
 binding_scores = aiupred_binding(sequence)
 ```
 
-Models are cached in `~/.cache/iupred/` after the first download.
+Models are cached in `~/.cache/iupred/` and only downloaded once.
+
+**Data management:**
+
+```python
+from iupred import ensure_aiupred_data, clear_aiupred_cache
+
+# Pre-download models (optional, useful for offline use)
+ensure_aiupred_data()
+
+# Clear cached models to free disk space or force re-download
+clear_aiupred_cache()
+```
 
 **Options:**
 

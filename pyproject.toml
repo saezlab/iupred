@@ -138,26 +138,43 @@ exclude = [
     "docs/_build"
 ]
 ignore = [
+    # flake8-annotations (ANN) - legacy code without type hints
+    "ANN001",  # Missing type annotation for function argument
+    "ANN002",  # Missing type annotation for *args
+    "ANN003",  # Missing type annotation for **kwargs
+    "ANN201",  # Missing return type annotation for public function
+    "ANN202",  # Missing return type annotation for private function
+    "ANN204",  # Missing return type annotation for special method
+    "ANN205",  # Missing return type annotation for staticmethod
+    "ANN206",  # Missing return type annotation for classmethod
     # flake8-bugbear (B)
     "B008",  # Name: function-call-in-default-argument
     "B024",  # Name: abstract-base-class-without-abstract-method
     # pydocstyle (D)
     "D100",  # Name: undocumented-public-module
+    "D101",  # Name: undocumented-public-class
+    "D102",  # Name: undocumented-public-method
+    "D103",  # Name: undocumented-public-function
     "D104",  # Name: undocumented-public-package
     "D105",  # Name: undocumented-magic-method
     "D107",  # Name: undocumented-public-init
     "D200",  # Name: unnecessary-multiline-docstring
     "D202",  # Name: blank-line-after-function
     "D203",  # Name: incorrect-blank-line-before-class
+    "D205",  # Name: blank-line-required-between-summary-and-description
     "D213",  # Name: multi-line-summary-second-line
     "D400",  # Name: missing-trailing-period
     "D401",  # Name: non-imperative-mood
+    "D415",  # Name: first-line-should-end-with-punctuation
     # Error (E)
     "E251",  # Name: unexpected-spaces-around-keyword-parameter-equals
     "E303",  # Name: too-many-blank-lines
     "E501",  # Name: line too long
     "E731",  # Name: lambda-assignment
-    "E741"  # allow I, O, l as variable names -> I is the identity matrix
+    "E741",  # allow I, O, l as variable names -> I is the identity matrix
+    # pyupgrade (UP)
+    "UP008",  # Name: super-call-with-parameters (legacy code)
+    "UP032",  # Name: f-string (legacy code uses .format())
 ]
 select = [
     "B",  # flake8-bugbear
