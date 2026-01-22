@@ -1,13 +1,47 @@
 """Download and cache AIUPred model weights."""
 
+import os
+import sys
 import logging
 from pathlib import Path
 import tarfile
 import urllib.request
 
 
+def _get_cache_dir():
+    r"""Get the platform-appropriate cache directory.
+
+    Returns:
+        Path to cache directory:
+        - Linux: ~/.cache/iupred
+        - macOS: ~/Library/Caches/iupred
+        - Windows: %LOCALAPPDATA%\iupred\Cache
+    """
+    if sys.platform == 'win32':
+        # Windows: use LOCALAPPDATA
+        base = os.environ.get('LOCALAPPDATA')
+        if base:
+            return Path(base) / 'iupred' / 'Cache'
+        # Fallback to APPDATA
+        base = os.environ.get('APPDATA')
+        if base:
+            return Path(base) / 'iupred' / 'Cache'
+        # Last resort
+        return Path.home() / 'iupred' / 'Cache'
+    elif sys.platform == 'darwin':
+        # macOS
+        return Path.home() / 'Library' / 'Caches' / 'iupred'
+    else:
+        # Linux and other Unix-like systems
+        # Respect XDG_CACHE_HOME if set
+        xdg_cache = os.environ.get('XDG_CACHE_HOME')
+        if xdg_cache:
+            return Path(xdg_cache) / 'iupred'
+        return Path.home() / '.cache' / 'iupred'
+
+
 # Cache directory for downloaded data
-CACHE_DIR = Path.home() / '.cache' / 'iupred'
+CACHE_DIR = _get_cache_dir()
 
 # URL for the AIUPred data archive
 AIUPRED_DATA_URL = 'https://static.omnipathdb.org/aiupred-data.tar.gz'
