@@ -102,11 +102,12 @@ skip = [
 #--- Pytest: a lightweight and scalable testing tool using the pytest framework
 [tool.pytest.ini_options]
 addopts = [
-    # "-Werror",  # if 3rd party libs raise DeprecationWarnings, just use filterwarnings below
     "--import-mode=importlib",  # allow using test files with same name
 ]
 filterwarnings = [
-    # "ignore:.*U.*mode is deprecated:DeprecationWarning",
+]
+markers = [
+    "aiupred: mark test as requiring AIUPred models (run with --run-aiupred)",
 ]
 python_files = "test_*.py"
 testpaths = [
