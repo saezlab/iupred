@@ -26,6 +26,10 @@ theme:
 
 nav:
 -   Home: index.md
+-   Tutorials:
+    -   Single Sequence: tutorials/single_sequence.md
+    -   Batch Prediction: tutorials/batch_prediction.md
+    -   Low-Memory Mode: tutorials/low_memory.md
 -   Reference: reference.md
 
 #=======    Extension settings (sorted alphabetically)  =====
