@@ -29,7 +29,7 @@ disordered regions in protein sequences:
 ### Additional Contributors
 
 - Balint Meszaros (IUPred2A)
-- Akos Deutsch (AIUPred-binding)
+- Norbert Deutsch (AIUPred-binding)
 - Denes Turei (modern tooling and packaging)
 
 ## Requirements
@@ -244,7 +244,7 @@ If you use **AIUPred-binding**, please cite:
 
 ```bibtex
 @article{erdos2025aiupred_binding,
-    author = {Erdős, Gábor and Deutsch, Ákos and Dosztányi, Zsuzsanna},
+    author = {Erdős, Gábor and Deutsch, Norbert and Dosztányi, Zsuzsanna},
     title = {{AIUPred} -- Binding: Energy Embedding to Identify
              Disordered Binding Regions},
     journal = {Journal of Molecular Biology},
