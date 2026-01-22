@@ -6,13 +6,43 @@ from pathlib import Path
 import warnings
 
 import numpy as np
-import torch
-from torch import Tensor, nn
-from torch.nn import TransformerEncoder, TransformerEncoderLayer
 from scipy.signal import savgol_filter
-from torch.nn.functional import pad
 
 from ._download import get_aiupred_file
+
+
+# Lazy import torch - it's an optional dependency
+_TORCH_AVAILABLE = False
+_TORCH_IMPORT_ERROR = None
+
+try:
+    import torch
+    from torch import Tensor, nn
+    from torch.nn import TransformerEncoder, TransformerEncoderLayer
+    from torch.nn.functional import pad
+    _TORCH_AVAILABLE = True
+except ImportError as e:
+    _TORCH_IMPORT_ERROR = e
+    torch = None
+    Tensor = None
+    nn = None
+    TransformerEncoder = None
+    TransformerEncoderLayer = None
+    pad = None
+
+
+def _check_torch_available():
+    """Check if PyTorch is available and raise an informative error if not."""
+    if not _TORCH_AVAILABLE:
+        raise ImportError(
+            'AIUPred requires PyTorch, which is not installed.\n\n'
+            'To use AIUPred functionality, install the aiupred extra:\n\n'
+            '    pip install iupred[aiupred]\n\n'
+            'Or install PyTorch directly:\n\n'
+            '    pip install torch>=1.9\n\n'
+            'Note: IUPred2 and ANCHOR2 work without PyTorch.\n'
+            f'Original error: {_TORCH_IMPORT_ERROR}'
+        )
 
 
 warnings.filterwarnings('ignore')
@@ -47,7 +77,16 @@ AA_CODE = [
 WINDOW = 100
 
 
-class PositionalEncoding(nn.Module):
+# Create a base class that works whether torch is available or not
+if _TORCH_AVAILABLE:
+    _ModuleBase = nn.Module
+else:
+    class _ModuleBase:
+        """Placeholder base class when torch is not available."""
+        pass
+
+
+class PositionalEncoding(_ModuleBase):
     """Positional encoding for the Transformer network"""
 
     def __init__(self, d_model, max_len=5000):
@@ -67,7 +106,7 @@ class PositionalEncoding(nn.Module):
         return x + self.pe[:, : x.size(1), :]
 
 
-class TransformerModel(nn.Module):
+class TransformerModel(_ModuleBase):
     """Transformer model to estimate positional contact potential from an amino acid sequence"""
 
     def __init__(self):
@@ -90,7 +129,7 @@ class TransformerModel(nn.Module):
         return torch.squeeze(output)
 
 
-class BindingTransformerModel(nn.Module):
+class BindingTransformerModel(_ModuleBase):
     def __init__(self):
         super().__init__()
         self.model_type = 'Transformer'
@@ -114,7 +153,7 @@ class BindingTransformerModel(nn.Module):
         return torch.squeeze(output)
 
 
-class BindingDecoderModel(nn.Module):
+class BindingDecoderModel(_ModuleBase):
     def __init__(self):
         super().__init__()
         input_dim = (WINDOW + 1) * (WINDOW + 1) * 32
@@ -135,7 +174,7 @@ class BindingDecoderModel(nn.Module):
         return torch.squeeze(output)
 
 
-class DecoderModel(nn.Module):
+class DecoderModel(_ModuleBase):
     """Regression model to estimate disorder propensity from and energy tensor"""
 
     def __init__(self):
@@ -157,7 +196,14 @@ class DecoderModel(nn.Module):
         return torch.squeeze(output)
 
 
-@torch.no_grad()
+def _no_grad_decorator():
+    """Get the appropriate no_grad decorator (torch's or a no-op)."""
+    if _TORCH_AVAILABLE:
+        return torch.no_grad()
+    return lambda fn: fn
+
+
+@_no_grad_decorator()
 def tokenize(sequence, device):
     """Tokenize an amino acid sequence. Non-standard amino acids are treated as X
     :param sequence: Amino acid sequence in string
@@ -455,7 +501,11 @@ def init_models(prediction_type, force_cpu=False, gpu_num=0):
 
     Returns:
         Tuple of (embedding_model, regression_model, device).
+
+    Raises:
+        ImportError: If PyTorch is not installed.
     """
+    _check_torch_available()
     device = torch.device(
         f'cuda:{gpu_num}' if torch.cuda.is_available() else 'cpu'
     )

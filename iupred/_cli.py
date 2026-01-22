@@ -5,13 +5,6 @@ import logging
 from pathlib import Path
 import argparse
 
-from .aiupred import (
-    init_models,
-    predict_binding,
-    predict_disorder,
-    low_memory_predict_binding,
-    low_memory_predict_disorder,
-)
 from .iupred2a import iupred, anchor2
 
 
@@ -145,6 +138,15 @@ def run_aiupred(args: argparse.Namespace) -> int:
     Returns:
         Exit code (0 for success).
     """
+    # Import AIUPred functions lazily (requires torch)
+    from .aiupred import (
+        init_models,
+        predict_binding,
+        predict_disorder,
+        low_memory_predict_binding,
+        low_memory_predict_disorder,
+    )
+
     _setup_logging(args.verbose)
 
     sequences = _read_fasta(args.input_file)

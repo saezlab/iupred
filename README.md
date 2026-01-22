@@ -37,14 +37,18 @@ disordered regions in protein sequences:
 - Python >= 3.9
 - numpy >= 1.20
 - scipy >= 1.7
-- torch >= 1.9 (for AIUPred)
+- torch >= 1.9 (optional, for AIUPred only)
 
 ## Installation
 
 ### Using pip (from GitHub)
 
 ```bash
+# Basic installation (IUPred2/ANCHOR2 only)
 pip install git+https://github.com/saezlab/iupred.git
+
+# With AIUPred support (requires PyTorch)
+pip install "iupred[aiupred] @ git+https://github.com/saezlab/iupred.git"
 ```
 
 ### Using uv (recommended)
@@ -55,13 +59,13 @@ pip install git+https://github.com/saezlab/iupred.git
 # Install uv if you don't have it
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
-# Create a new project with iupred
+# Create a new project with iupred (IUPred2/ANCHOR2 only)
 uv init my-project
 cd my-project
 uv add git+https://github.com/saezlab/iupred.git
 
-# Or add to an existing project
-uv add git+https://github.com/saezlab/iupred.git
+# Or with AIUPred support
+uv add "iupred[aiupred] @ git+https://github.com/saezlab/iupred.git"
 ```
 
 ### Development installation
@@ -75,10 +79,16 @@ uv venv
 source .venv/bin/activate
 uv pip install -e ".[tests]"
 
+# With AIUPred support
+uv pip install -e ".[tests,aiupred]"
+
 # Or using pip
 python -m venv .venv
 source .venv/bin/activate
 pip install -e ".[tests]"
+
+# With AIUPred support
+pip install -e ".[tests,aiupred]"
 ```
 
 ## Usage
