@@ -157,6 +157,27 @@ clear_aiupred_cache()
 
 **Memory requirements:** 2GB VRAM handles ~3,000 residues; 12GB handles ~16,000.
 
+### Command-Line Interface
+
+The package provides a CLI for running predictions from the terminal:
+
+```bash
+# IUPred2 prediction (fast, no downloads required)
+iupred iupred2 -i sequences.fasta -o results.txt -m long
+
+# IUPred2 with ANCHOR2 binding prediction
+iupred iupred2 -i sequences.fasta -a
+
+# AIUPred prediction (models downloaded on first use)
+iupred aiupred -i sequences.fasta -o results.txt
+
+# AIUPred with binding prediction, CPU-only mode
+iupred aiupred -i sequences.fasta -b --force-cpu
+
+# AIUPred low-memory mode for long sequences
+iupred aiupred -i sequences.fasta --low-memory --chunk-size 1000
+```
+
 ## References
 
 If you use **IUPred2/ANCHOR2**, please cite:
@@ -166,6 +187,25 @@ If you use **IUPred2/ANCHOR2**, please cite:
 > *Nucleic Acids Res.* 2018;46(W1):W329-W337.
 > https://doi.org/10.1093/nar/gky384
 
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{meszaros2018iupred2a,
+    author = {Mészáros, Bálint and Erdős, Gábor and Dosztányi, Zsuzsanna},
+    title = {{IUPred2A}: context-dependent prediction of protein disorder
+             as a function of redox state and protein binding},
+    journal = {Nucleic Acids Research},
+    volume = {46},
+    number = {W1},
+    pages = {W329-W337},
+    year = {2018},
+    doi = {10.1093/nar/gky384}
+}
+```
+
+</details>
+
 If you use **AIUPred**, please cite:
 
 > Erdos G, Dosztanyi Z. AIUPred: combining energy estimation with deep learning
@@ -173,12 +213,50 @@ If you use **AIUPred**, please cite:
 > *Nucleic Acids Res.* 2024;52(W1):W176-W181.
 > https://doi.org/10.1093/nar/gkae385
 
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{erdos2024aiupred,
+    author = {Erdős, Gábor and Dosztányi, Zsuzsanna},
+    title = {{AIUPred}: combining energy estimation with deep learning
+             for the enhanced prediction of protein disorder},
+    journal = {Nucleic Acids Research},
+    volume = {52},
+    number = {W1},
+    pages = {W176-W181},
+    year = {2024},
+    doi = {10.1093/nar/gkae385}
+}
+```
+
+</details>
+
 If you use **AIUPred-binding**, please cite:
 
 > Erdos G, Deutsch A, Dosztanyi Z. Identification of disordered binding regions
 > using energy embedding.
 > *J Mol Biol.* 2025;437(15):169071.
 > https://doi.org/10.1016/j.jmb.2025.169071
+
+<details>
+<summary>BibTeX</summary>
+
+```bibtex
+@article{erdos2025aiupred_binding,
+    author = {Erdős, Gábor and Deutsch, Ákos and Dosztányi, Zsuzsanna},
+    title = {{AIUPred} -- Binding: Energy Embedding to Identify
+             Disordered Binding Regions},
+    journal = {Journal of Molecular Biology},
+    volume = {437},
+    number = {15},
+    pages = {169071},
+    year = {2025},
+    doi = {10.1016/j.jmb.2025.169071}
+}
+```
+
+</details>
 
 ## License
 
