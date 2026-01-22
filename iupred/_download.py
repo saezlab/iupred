@@ -76,7 +76,9 @@ def _download_and_extract():
 
     archive_path = CACHE_DIR / 'aiupred-data.tar.gz'
 
-    _logger.info(f'Downloading AIUPred model weights from {AIUPRED_DATA_URL}...')
+    _logger.info(
+        f'Downloading AIUPred model weights from {AIUPRED_DATA_URL}...'
+    )
     print('Downloading AIUPred model weights (~82 MB)...')
 
     try:
@@ -148,7 +150,7 @@ def get_aiupred_file(filename):
     if not file_path.exists():
         raise FileNotFoundError(
             f"AIUPred file '{filename}' not found in cache. "
-            f"Expected files: {', '.join(AIUPRED_FILES)}"
+            f'Expected files: {", ".join(AIUPRED_FILES)}'
         )
 
     return file_path

@@ -113,11 +113,13 @@ class IupredPredictor:
 
     def predict_disorder(self, sequence):
         from iupred import iupred
+
         scores, _ = iupred(sequence, mode='long')
         return scores
 
     def predict_binding(self, sequence):
         from iupred import iupred, anchor2
+
         iupred_scores, _ = iupred(sequence, mode='long')
         return anchor2(sequence, iupred_scores)
 
@@ -130,10 +132,12 @@ class AiupredPredictor:
 
     def predict_disorder(self, sequence):
         from iupred import aiupred_disorder
+
         return aiupred_disorder(sequence, force_cpu=True)
 
     def predict_binding(self, sequence):
         from iupred import aiupred_binding
+
         return aiupred_binding(sequence, force_cpu=True)
 
 

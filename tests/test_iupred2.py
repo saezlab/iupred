@@ -41,10 +41,13 @@ class TestIupredModes:
 
         # At least some scores should differ between modes
         differences = sum(
-            1 for a, b in zip(scores_long, scores_short, strict=True)
+            1
+            for a, b in zip(scores_long, scores_short)
             if abs(a - b) > 0.01
         )
-        assert differences > 0, 'Long and short modes should give different results'
+        assert differences > 0, (
+            'Long and short modes should give different results'
+        )
 
 
 class TestAnchor2:

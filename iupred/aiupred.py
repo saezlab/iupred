@@ -22,34 +22,53 @@ PACKAGE_DIR = Path(__file__).parent
 DATA_DIR = PACKAGE_DIR / 'data'
 
 AA_CODE = [
-    'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L',
-    'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'Y', 'X',
+    'A',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'K',
+    'L',
+    'M',
+    'N',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'V',
+    'W',
+    'Y',
+    'X',
 ]
 WINDOW = 100
 
 
 class PositionalEncoding(nn.Module):
-    """Positional encoding for the Transformer network
-    """
+    """Positional encoding for the Transformer network"""
 
     def __init__(self, d_model, max_len=5000):
         super(PositionalEncoding, self).__init__()
 
         pe = torch.zeros(max_len, d_model)
         position = torch.arange(0, max_len, dtype=torch.float).unsqueeze(1)
-        div_term = torch.exp(torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model))
+        div_term = torch.exp(
+            torch.arange(0, d_model, 2).float() * (-math.log(10000.0) / d_model)
+        )
         pe[:, 0::2] = torch.sin(position * div_term)
         pe[:, 1::2] = torch.cos(position * div_term)
         pe = pe.unsqueeze(0)
         self.register_buffer('pe', pe)
 
     def forward(self, x):
-        return x + self.pe[:, :x.size(1), :]
+        return x + self.pe[:, : x.size(1), :]
 
 
 class TransformerModel(nn.Module):
-    """Transformer model to estimate positional contact potential from an amino acid sequence
-    """
+    """Transformer model to estimate positional contact potential from an amino acid sequence"""
 
     def __init__(self):
         super().__init__()
@@ -77,7 +96,9 @@ class BindingTransformerModel(nn.Module):
         self.model_type = 'Transformer'
         self.d_model = 32
         self.pos_encoder = PositionalEncoding(self.d_model)
-        encoder_layers = TransformerEncoderLayer(self.d_model, 2, 64, 0, batch_first=True)
+        encoder_layers = TransformerEncoderLayer(
+            self.d_model, 2, 64, 0, batch_first=True
+        )
         self.transformer_encoder = TransformerEncoder(encoder_layers, 2)
         self.encoder = nn.Embedding(21, self.d_model)
         self.decoder = nn.Linear((WINDOW + 1) * self.d_model, 1)
@@ -115,8 +136,7 @@ class BindingDecoderModel(nn.Module):
 
 
 class DecoderModel(nn.Module):
-    """Regression model to estimate disorder propensity from and energy tensor
-    """
+    """Regression model to estimate disorder propensity from and energy tensor"""
 
     def __init__(self):
         super().__init__()
@@ -144,10 +164,15 @@ def tokenize(sequence, device):
     :param device: Device to run on. CUDA{x} or CPU
     :return: Tokenized tensors
     """
-    return torch.tensor([AA_CODE.index(aa) if aa in AA_CODE else 20 for aa in sequence], device=device)
+    return torch.tensor(
+        [AA_CODE.index(aa) if aa in AA_CODE else 20 for aa in sequence],
+        device=device,
+    )
 
 
-def predict_disorder(sequence, energy_model, regression_model, device, smoothing=None):
+def predict_disorder(
+    sequence, energy_model, regression_model, device, smoothing=None
+):
     """Predict disorder propensity from a sequence using a transformer and a regression model
     :param sequence: Amino acid sequence in string
     :param energy_model: Transformer model
@@ -157,9 +182,13 @@ def predict_disorder(sequence, energy_model, regression_model, device, smoothing
     :return:
     """
     predicted_energies = calculate_energy(sequence, energy_model, device)
-    padded_energies = pad(predicted_energies, (WINDOW // 2, WINDOW // 2), 'constant', 0)
+    padded_energies = pad(
+        predicted_energies, (WINDOW // 2, WINDOW // 2), 'constant', 0
+    )
     unfolded_energies = padded_energies.unfold(0, WINDOW + 1, 1)
-    predicted_disorder = regression_model(unfolded_energies).detach().cpu().numpy()
+    predicted_disorder = (
+        regression_model(unfolded_energies).detach().cpu().numpy()
+    )
     if smoothing and len(sequence) > 10:
         predicted_disorder = savgol_filter(predicted_disorder, 11, 5)
     return predicted_disorder
@@ -173,19 +202,31 @@ def calculate_energy(sequence, energy_model, device):
     :return: Tensor of energy values
     """
     tokenized_sequence = tokenize(sequence, device)
-    padded_token = pad(tokenized_sequence, (WINDOW // 2, WINDOW // 2), 'constant', 20)
+    padded_token = pad(
+        tokenized_sequence, (WINDOW // 2, WINDOW // 2), 'constant', 20
+    )
     unfolded_tokens = padded_token.unfold(0, WINDOW + 1, 1)
     return energy_model(unfolded_tokens)
 
 
-def predict_binding(sequence, embedding_model, decoder_model, device, smoothing=None, energy_only=False, binding=False):
+def predict_binding(
+    sequence,
+    embedding_model,
+    decoder_model,
+    device,
+    smoothing=None,
+    energy_only=False,
+    binding=False,
+):
     _tokens = tokenize(sequence, device)
     _padded_token = pad(_tokens, (WINDOW // 2, WINDOW // 2), 'constant', 0)
     _unfolded_tokes = _padded_token.unfold(0, WINDOW + 1, 1)
     if energy_only:
         return embedding_model(_unfolded_tokes).detach().cpu().numpy()
     _token_embedding = embedding_model(_unfolded_tokes, embed_only=True)
-    _padded_embed = pad(_token_embedding, (0, 0, 0, 0, WINDOW // 2, WINDOW // 2), 'constant', 0)
+    _padded_embed = pad(
+        _token_embedding, (0, 0, 0, 0, WINDOW // 2, WINDOW // 2), 'constant', 0
+    )
     _unfolded_embedding = _padded_embed.unfold(0, WINDOW + 1, 1)
     _decoder_input = _unfolded_embedding.permute(0, 2, 1, 3)
     _prediction = decoder_model(_decoder_input).detach().cpu().numpy()
@@ -196,7 +237,14 @@ def predict_binding(sequence, embedding_model, decoder_model, device, smoothing=
     return savgol_filter(_prediction, 11, 5)
 
 
-def low_memory_predict_disorder(sequence, embedding_model, decoder_model, device, smoothing=None, chunk_len=1000):
+def low_memory_predict_disorder(
+    sequence,
+    embedding_model,
+    decoder_model,
+    device,
+    smoothing=None,
+    chunk_len=1000,
+):
     overlap = 100
     if (len(sequence) - 1) % (chunk_len - overlap) == 0:
         logging.warning('Chunk length decreased by 1 to fit sequence length')
@@ -205,31 +253,52 @@ def low_memory_predict_disorder(sequence, embedding_model, decoder_model, device
         raise ValueError('Chunk len must be bigger than 200!')
     overlapping_predictions = []
     for chunk in range(0, len(sequence), chunk_len - overlap):
-        overlapping_predictions.append(predict_disorder(
-            sequence[chunk:chunk + chunk_len],
-            embedding_model,
-            decoder_model,
-            device,
-        ))
-    prediction = np.concatenate((overlapping_predictions[0], *[x[overlap:] for x in overlapping_predictions[1:]]))
+        overlapping_predictions.append(
+            predict_disorder(
+                sequence[chunk : chunk + chunk_len],
+                embedding_model,
+                decoder_model,
+                device,
+            )
+        )
+    prediction = np.concatenate(
+        (
+            overlapping_predictions[0],
+            *[x[overlap:] for x in overlapping_predictions[1:]],
+        )
+    )
     if not smoothing or len(sequence) <= 10:
         return prediction
     return savgol_filter(prediction, 11, 5)
 
 
-def low_memory_predict_binding(sequence, embedding_model, decoder_model, device, smoothing=None, chunk_len=1000):
+def low_memory_predict_binding(
+    sequence,
+    embedding_model,
+    decoder_model,
+    device,
+    smoothing=None,
+    chunk_len=1000,
+):
     overlap = 100
     if chunk_len <= overlap:
         raise ValueError('Chunk len must be bigger than 200!')
     overlapping_predictions = []
     for chunk in range(0, len(sequence), chunk_len - overlap):
-        overlapping_predictions.append(predict_binding(
-            sequence[chunk:chunk + chunk_len],
-            embedding_model,
-            decoder_model,
-            device
-        ))
-    prediction = np.concatenate((overlapping_predictions[0], *[x[overlap:] for x in overlapping_predictions[1:]]))
+        overlapping_predictions.append(
+            predict_binding(
+                sequence[chunk : chunk + chunk_len],
+                embedding_model,
+                decoder_model,
+                device,
+            )
+        )
+    prediction = np.concatenate(
+        (
+            overlapping_predictions[0],
+            *[x[overlap:] for x in overlapping_predictions[1:]],
+        )
+    )
     return binding_transform(prediction, smoothing=smoothing)
     # return transformed_pred
 
@@ -325,16 +394,29 @@ def aiupred_disorder(sequence, force_cpu=False, gpu_num=0):
     """Library function to carry out single sequence analysis
     :param sequence: Amino acid sequence in a string
     """
-    embedding_model, reg_model, device = init_models('disorder', force_cpu, gpu_num)
-    return predict_disorder(sequence, embedding_model, reg_model, device, smoothing=True)
+    embedding_model, reg_model, device = init_models(
+        'disorder', force_cpu, gpu_num
+    )
+    return predict_disorder(
+        sequence, embedding_model, reg_model, device, smoothing=True
+    )
 
 
 def aiupred_binding(sequence, force_cpu=False, gpu_num=0):
     """Library function to carry out single sequence analysis
     :param sequence: Amino acid sequence in a string
     """
-    embedding_model, reg_model, device = init_models('binding', force_cpu, gpu_num)
-    return predict_binding(sequence, embedding_model, reg_model, device, binding=True, smoothing=True)
+    embedding_model, reg_model, device = init_models(
+        'binding', force_cpu, gpu_num
+    )
+    return predict_binding(
+        sequence,
+        embedding_model,
+        reg_model,
+        device,
+        binding=True,
+        smoothing=True,
+    )
 
 
 def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
@@ -344,7 +426,9 @@ def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
     :param gpu_num: Index of the GPU to use, default=0
     :return: Dictionary with parsed sequences and predicted results
     """
-    embedding_model, reg_model, device = init_models('disorder', force_cpu, gpu_num)
+    embedding_model, reg_model, device = init_models(
+        'disorder', force_cpu, gpu_num
+    )
     sequences = multifasta_reader(multifasta_file)
     logging.debug('Sequences read')
     logging.info(f'{len(sequences)} sequences read')
@@ -354,12 +438,21 @@ def main(multifasta_file, force_cpu=False, gpu_num=0, binding=False):
     logging.StreamHandler.terminator = ''
     for num, (ident, sequence) in enumerate(sequences.items()):
         results[ident] = {}
-        results[ident]['aiupred'] = predict_disorder(sequence, embedding_model, reg_model, device, smoothing=True)
+        results[ident]['aiupred'] = predict_disorder(
+            sequence, embedding_model, reg_model, device, smoothing=True
+        )
         if binding:
-            binding_embedding, binding_regression, _ = init_models('binding', force_cpu, gpu_num)
-            results[ident]['aiupred-binding'] = predict_binding(sequence, binding_embedding, binding_regression, device,
-                                                                binding=binding,
-                                                                smoothing=True)
+            binding_embedding, binding_regression, _ = init_models(
+                'binding', force_cpu, gpu_num
+            )
+            results[ident]['aiupred-binding'] = predict_binding(
+                sequence,
+                binding_embedding,
+                binding_regression,
+                device,
+                binding=binding,
+                smoothing=True,
+            )
         results[ident]['sequence'] = sequence
         logging.debug(f'{num}/{len(sequences)} sequences done...\r')
     logging.StreamHandler.terminator = '\n'

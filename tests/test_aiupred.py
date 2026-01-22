@@ -50,7 +50,12 @@ class TestAiupredRegressionValues:
         """Test disorder values at specific positions in p53."""
         scores = aiupred_disorder(P53_SEQUENCE, force_cpu=True)
 
-        for pos, expected_aa, expected_value, tolerance in self.EXPECTED_DISORDER_VALUES:
+        for (
+            pos,
+            expected_aa,
+            expected_value,
+            tolerance,
+        ) in self.EXPECTED_DISORDER_VALUES:
             actual_aa = P53_SEQUENCE[pos]
             assert actual_aa == expected_aa, (
                 f'Position {pos}: expected {expected_aa}, found {actual_aa}'
@@ -65,7 +70,12 @@ class TestAiupredRegressionValues:
         """Test binding values at specific positions in p53."""
         scores = aiupred_binding(P53_SEQUENCE, force_cpu=True)
 
-        for pos, expected_aa, expected_value, tolerance in self.EXPECTED_BINDING_VALUES:
+        for (
+            pos,
+            expected_aa,
+            expected_value,
+            tolerance,
+        ) in self.EXPECTED_BINDING_VALUES:
             actual_aa = P53_SEQUENCE[pos]
             assert actual_aa == expected_aa
             actual_value = float(scores[pos])
@@ -86,7 +96,7 @@ class TestAiupredDisorderVsBinding:
         # Calculate mean absolute difference
         differences = [
             abs(float(d) - float(b))
-            for d, b in zip(disorder_scores, binding_scores, strict=True)
+            for d, b in zip(disorder_scores, binding_scores)
         ]
         mean_diff = sum(differences) / len(differences)
 

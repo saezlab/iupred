@@ -15,7 +15,9 @@ from .conftest import P53_TEST_POSITIONS
 class TestDisorderPredictionBasics:
     """Basic functionality tests for disorder prediction."""
 
-    def test_output_length_matches_input(self, short_sequence, iupred_predictor):
+    def test_output_length_matches_input(
+        self, short_sequence, iupred_predictor
+    ):
         """Output length should match input sequence length."""
         scores = iupred_predictor.predict_disorder(short_sequence)
         assert len(scores) == len(short_sequence)
@@ -40,7 +42,9 @@ class TestDisorderPredictionBasics:
 class TestBindingPredictionBasics:
     """Basic functionality tests for binding prediction."""
 
-    def test_output_length_matches_input(self, short_sequence, iupred_predictor):
+    def test_output_length_matches_input(
+        self, short_sequence, iupred_predictor
+    ):
         """Output length should match input sequence length."""
         scores = iupred_predictor.predict_binding(short_sequence)
         assert len(scores) == len(short_sequence)
@@ -64,7 +68,9 @@ class TestP53BiologicalPatterns:
         """p53 N-terminal region should show high disorder."""
         scores = iupred_predictor.predict_disorder(p53_sequence)
         nterminal_scores = scores[:50]
-        mean_disorder = sum(float(s) for s in nterminal_scores) / len(nterminal_scores)
+        mean_disorder = sum(float(s) for s in nterminal_scores) / len(
+            nterminal_scores
+        )
         assert mean_disorder > 0.5, (
             f'N-terminal mean disorder {mean_disorder:.3f} should be > 0.5'
         )
@@ -79,7 +85,9 @@ class TestP53BiologicalPatterns:
             f'than DBD ({dbd_mean:.3f})'
         )
 
-    def test_disordered_vs_ordered_residues(self, p53_sequence, iupred_predictor):
+    def test_disordered_vs_ordered_residues(
+        self, p53_sequence, iupred_predictor
+    ):
         """Specific disordered residues should score higher than ordered ones."""
         scores = iupred_predictor.predict_disorder(p53_sequence)
 
@@ -105,7 +113,9 @@ class TestP53BiologicalPatterns:
 class TestEdgeCases:
     """Tests for edge cases and unusual inputs."""
 
-    def test_sequence_with_unknown_amino_acid(self, sequence_with_x, iupred_predictor):
+    def test_sequence_with_unknown_amino_acid(
+        self, sequence_with_x, iupred_predictor
+    ):
         """Sequences with X (unknown) should be handled."""
         scores = iupred_predictor.predict_disorder(sequence_with_x)
         assert len(scores) == len(sequence_with_x)
@@ -137,7 +147,9 @@ class TestEdgeCases:
 class TestAiupredDisorderPredictionBasics:
     """Basic functionality tests for AIUPred disorder prediction."""
 
-    def test_output_length_matches_input(self, short_sequence, aiupred_predictor):
+    def test_output_length_matches_input(
+        self, short_sequence, aiupred_predictor
+    ):
         """Output length should match input sequence length."""
         scores = aiupred_predictor.predict_disorder(short_sequence)
         assert len(scores) == len(short_sequence)
@@ -156,6 +168,7 @@ class TestAiupredDisorderPredictionBasics:
     def test_returns_numpy_array(self, short_sequence, aiupred_predictor):
         """AIUPred should return numpy array."""
         import numpy as np
+
         scores = aiupred_predictor.predict_disorder(short_sequence)
         assert isinstance(scores, np.ndarray)
 
@@ -164,7 +177,9 @@ class TestAiupredDisorderPredictionBasics:
 class TestAiupredBindingPredictionBasics:
     """Basic functionality tests for AIUPred binding prediction."""
 
-    def test_output_length_matches_input(self, short_sequence, aiupred_predictor):
+    def test_output_length_matches_input(
+        self, short_sequence, aiupred_predictor
+    ):
         """Output length should match input sequence length."""
         scores = aiupred_predictor.predict_binding(short_sequence)
         assert len(scores) == len(short_sequence)
@@ -184,7 +199,9 @@ class TestAiupredP53BiologicalPatterns:
         """p53 N-terminal region should show high disorder."""
         scores = aiupred_predictor.predict_disorder(p53_sequence)
         nterminal_scores = scores[:50]
-        mean_disorder = sum(float(s) for s in nterminal_scores) / len(nterminal_scores)
+        mean_disorder = sum(float(s) for s in nterminal_scores) / len(
+            nterminal_scores
+        )
         assert mean_disorder > 0.5
 
     def test_dbd_is_more_ordered(self, p53_sequence, aiupred_predictor):
@@ -194,7 +211,9 @@ class TestAiupredP53BiologicalPatterns:
         dbd_mean = sum(float(s) for s in scores[100:290]) / 190
         assert nterminal_mean > dbd_mean
 
-    def test_disordered_vs_ordered_residues(self, p53_sequence, aiupred_predictor):
+    def test_disordered_vs_ordered_residues(
+        self, p53_sequence, aiupred_predictor
+    ):
         """Specific disordered residues should score higher than ordered ones."""
         scores = aiupred_predictor.predict_disorder(p53_sequence)
 
@@ -217,7 +236,9 @@ class TestAiupredP53BiologicalPatterns:
 class TestAiupredEdgeCases:
     """Tests for edge cases with AIUPred."""
 
-    def test_sequence_with_unknown_amino_acid(self, sequence_with_x, aiupred_predictor):
+    def test_sequence_with_unknown_amino_acid(
+        self, sequence_with_x, aiupred_predictor
+    ):
         """Sequences with X should be handled."""
         scores = aiupred_predictor.predict_disorder(sequence_with_x)
         assert len(scores) == len(sequence_with_x)
@@ -231,5 +252,5 @@ class TestAiupredEdgeCases:
         """Same input should produce same output."""
         scores1 = aiupred_predictor.predict_disorder(short_sequence)
         scores2 = aiupred_predictor.predict_disorder(short_sequence)
-        for s1, s2 in zip(scores1, scores2, strict=True):
+        for s1, s2 in zip(scores1, scores2):
             assert abs(s1 - s2) < 1e-6

@@ -32,10 +32,14 @@ def read_matrix(matrix_file):
     with open(matrix_file) as _fhm:
         for _line in _fhm:
             if _line.split()[0] in _mtx:
-                _mtx[_line.split()[0]][_line.split()[1]] = float(_line.split()[2])
+                _mtx[_line.split()[0]][_line.split()[1]] = float(
+                    _line.split()[2]
+                )
             else:
                 _mtx[_line.split()[0]] = {}
-                _mtx[_line.split()[0]][_line.split()[1]] = float(_line.split()[2])
+                _mtx[_line.split()[0]][_line.split()[1]] = float(
+                    _line.split()[2]
+                )
     return _mtx
 
 
@@ -59,7 +63,11 @@ def read_histo(histo_file):
 def smooth(energy_list, window):
     weighted_energy_score = [0] * len(energy_list)
     for idx in range(len(energy_list)):
-        weighted_energy_score[idx] = avg(energy_list[max(0, idx - window):min(len(energy_list), idx + window + 1)])
+        weighted_energy_score[idx] = avg(
+            energy_list[
+                max(0, idx - window) : min(len(energy_list), idx + window + 1)
+            ]
+        )
     return weighted_energy_score
 
 
@@ -95,7 +103,9 @@ def iupred(seq, mode='short', folder=None):
         wc = 10
         p = Path(os.path.join(folder, 'iupred2_short_energy_matrix'))
         mtx = read_matrix(p)
-        histo, histo_min, histo_max, histo_step = read_histo(os.path.join(folder, 'short_histogram'))
+        histo, histo_min, histo_max, histo_step = read_histo(
+            os.path.join(folder, 'short_histogram')
+        )
 
     elif mode == 'glob':
         lc = 1
@@ -103,7 +113,9 @@ def iupred(seq, mode='short', folder=None):
         wc = 15
         p = Path(os.path.join(folder, 'iupred2_long_energy_matrix'))
         mtx = read_matrix(p)
-        histo, histo_min, histo_max, histo_step = read_histo(os.path.join(folder, 'long_histogram'))
+        histo, histo_min, histo_max, histo_step = read_histo(
+            os.path.join(folder, 'long_histogram')
+        )
 
     else:
         lc = 1
@@ -119,7 +131,10 @@ def iupred(seq, mode='short', folder=None):
     iupred_score = [0] * len(seq)
 
     for idx in range(len(seq)):
-        freq_dct = aa_freq(seq[max(0, idx - uc):max(0, idx - lc)] + seq[idx + lc + 1:idx + uc + 1])
+        freq_dct = aa_freq(
+            seq[max(0, idx - uc) : max(0, idx - lc)]
+            + seq[idx + lc + 1 : idx + uc + 1]
+        )
         for aa, freq in freq_dct.items():
             try:
                 unweighted_energy_score[idx] += mtx[seq[idx]][aa] * freq
@@ -182,13 +197,15 @@ def iupred(seq, mode='short', folder=None):
         nr = 0
         res = ''
         for i in mgr:
-            res += seq[nr:i[0]] + seq[i[0]:i[1] + 1].upper()
+            res += seq[nr : i[0]] + seq[i[0] : i[1] + 1].upper()
             nr = i[1] + 1
         res += seq[nr:]
-        res = ' '.join([res[i:i + 10] for i in range(0, len(res), 10)])
+        res = ' '.join([res[i : i + 10] for i in range(0, len(res), 10)])
         glob_text += 'Number of globular domains: {}\n'.format(len(mgr))
         for n, i in enumerate(mgr):
-            glob_text += '          globular domain   {}.\t{}-{}\n'.format(n + 1, i[0] + 1, i[1] + 1)
+            glob_text += '          globular domain   {}.\t{}-{}\n'.format(
+                n + 1, i[0] + 1, i[1] + 1
+            )
         glob_text += '\n'.join(textwrap.wrap(res, 70))
 
     for idx, val in enumerate(weighted_energy_score):
@@ -197,7 +214,9 @@ def iupred(seq, mode='short', folder=None):
         elif val >= histo_max - 2 * histo_step:
             iupred_score[idx] = 0
         else:
-            iupred_score[idx] = histo[int((weighted_energy_score[idx] - histo_min) * (1 / histo_step))]
+            iupred_score[idx] = histo[
+                int((weighted_energy_score[idx] - histo_min) * (1 / histo_step))
+            ]
     return iupred_score, glob_text
 
 
@@ -231,7 +250,9 @@ def anchor2(seq, iupred_scores, folder=None):
     energy_gain = [0] * len(seq)
     for idx in range(len(seq)):
         freq_dct = aa_freq(
-            seq[max(0, idx - local_window_size):max(0, idx - 1)] + seq[idx + 2:idx + local_window_size + 1])
+            seq[max(0, idx - local_window_size) : max(0, idx - 1)]
+            + seq[idx + 2 : idx + local_window_size + 1]
+        )
         for aa, freq in freq_dct.items():
             try:
                 local_energy_score[idx] += mtx[seq[idx]][aa] * freq
@@ -244,7 +265,9 @@ def anchor2(seq, iupred_scores, folder=None):
                 interface_energy_score[idx] += 0
         energy_gain[idx] = local_energy_score[idx] - interface_energy_score[idx]
     iupred_scores = smooth(iupred_scores, iupred_window_size)
-    energy_gain = smooth(smooth(energy_gain, local_smoothing_window), local_smoothing_window)
+    energy_gain = smooth(
+        smooth(energy_gain, local_smoothing_window), local_smoothing_window
+    )
     anchor_score = [0] * len(seq)
     for idx in range(len(seq)):
         sign = 1
@@ -253,6 +276,12 @@ def anchor2(seq, iupred_scores, folder=None):
         corr = 0
         if iupred_scores[idx] > iupred_limit and energy_gain[idx] < 0:
             corr = (par_a / (iupred_scores[idx] - par_c)) + par_b
-        anchor_score[idx] = sign * (energy_gain[idx] + corr - par_b) * (iupred_scores[idx] - par_c)
-        anchor_score[idx] = 1 / (1 + math.e ** (-22.97968 * (anchor_score[idx] - 0.0116)))
+        anchor_score[idx] = (
+            sign
+            * (energy_gain[idx] + corr - par_b)
+            * (iupred_scores[idx] - par_c)
+        )
+        anchor_score[idx] = 1 / (
+            1 + math.e ** (-22.97968 * (anchor_score[idx] - 0.0116))
+        )
     return anchor_score
