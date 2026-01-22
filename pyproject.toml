@@ -129,7 +129,7 @@ report_level = "INFO"
 [tool.ruff]
 extend-include = [ "*.ipynb" ]
 line-length = 80
-target-version = "py312"
+target-version = "py39"
 
 [tool.ruff.format]
 quote-style = "single"
@@ -151,6 +151,7 @@ ignore = [
     # flake8-bugbear (B)
     "B008",  # Name: function-call-in-default-argument
     "B024",  # Name: abstract-base-class-without-abstract-method
+    "B905",  # Name: zip-without-explicit-strict (strict= requires Python 3.10+)
     # pydocstyle (D)
     "D100",  # Name: undocumented-public-module
     "D101",  # Name: undocumented-public-class
