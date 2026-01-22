@@ -25,11 +25,11 @@ disordered regions in protein sequences:
 
 - Zsuzsanna Dosztanyi (ELTE, Budapest)
 - Gabor Erdos (ELTE, Budapest)
+- Norbert Deutsch (ELTE, Budapest; AIUPred-binding)
+- Balint Meszaros (ELTE, Budapest; IUPred2A)
 
 ### Additional Contributors
 
-- Balint Meszaros (IUPred2A)
-- Norbert Deutsch (AIUPred-binding)
 - Denes Turei (modern tooling and packaging)
 
 ## Requirements
