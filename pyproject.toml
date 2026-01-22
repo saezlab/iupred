@@ -56,6 +56,9 @@ tests = [
     "ruff",
 ]
 
+[project.scripts]
+iupred = "iupred._cli:main"
+
 [project.urls]
 Documentation = "https://saezlab.github.io/iupred"
 Homepage = "https://github.com/saezlab/iupred"
