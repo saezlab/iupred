@@ -1,0 +1,76 @@
+{
+  "template": "/home/denes/pypath-new/_project_template",
+  "commit": "25823e80b9e1102ec0d17b3181aaecb7ba514ca9",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_name": "IUPred",
+      "project_slug": "iupred",
+      "package_name": "iupred",
+      "short_description": "IUPred and AIUPred: Prediction of intrinsically disordered protein regions",
+      "readme": "IUPred and AIUPred for predicting intrinsically disordered regions in protein sequences",
+      "author_full_name": "Zsuzsanna Dosztányi, Gábor Erdős",
+      "author_email": "zsuzsanna.dosztanyi@ttk.elte.hu",
+      "github_organization": "saezlab",
+      "project_repo": "https://github.com/saezlab/iupred",
+      "license": "MIT License",
+      "_license": {
+        "MIT License": {
+          "license_short": "MIT",
+          "license_classifiers": "MIT License",
+          "license_spdx": "MIT"
+        },
+        "BSD 2-Clause License": {
+          "license_short": "BSD-2-Clause",
+          "license_classifiers": "BSD License",
+          "license_spdx": "BSD-2-Clause"
+        },
+        "BSD 3-Clause License": {
+          "license_short": "BSD-3-Clause",
+          "license_classifiers": "BSD License",
+          "license_spdx": "BSD-3-Clause"
+        },
+        "Apache License Version 2.0": {
+          "license_short": "Apache-2.0",
+          "license_classifiers": "Apache Software License",
+          "license_spdx": "Apache-2.0"
+        },
+        "GNU General Public License Version 3": {
+          "license_short": "GPL-3.0-or-later",
+          "license_classifiers": "GNU General Public License v3 (GPLv3)",
+          "license_spdx": "GPL-3.0-or-later"
+        },
+        "GNU Lesser General Public License Version 3": {
+          "license_short": "LGPL-3.0-or-later",
+          "license_classifiers": "GNU Lesser General Public License v3 (LGPLv3)",
+          "license_spdx": "LGPL-3.0-or-later"
+        },
+        "ISC License": {
+          "license_short": "ISC",
+          "license_classifiers": "ISC License (ISCL)",
+          "license_spdx": "ISC"
+        },
+        "Unlicense": {
+          "license_short": "Unlicense",
+          "license_classifiers": "The Unlicense (Unlicense)",
+          "license_spdx": "Unlicense"
+        }
+      },
+      "python_version": "3.9",
+      "copyright_holder": "Research Centre for Natural Sciences, Hungarian Academy of Sciences",
+      "include_security_workflow": "no",
+      "__year": "2026",
+      "_extensions": [
+        "cookiecutter.extensions.TimeExtension"
+      ],
+      "_copy_without_render": [
+        ".github/workflows/*.yml",
+        ".github/workflows/**.yaml",
+        ".github/actions/*"
+      ],
+      "_template": "/home/denes/pypath-new/_project_template",
+      "_commit": "25823e80b9e1102ec0d17b3181aaecb7ba514ca9"
+    }
+  },
+  "directory": null
+}
