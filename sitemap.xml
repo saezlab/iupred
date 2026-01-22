@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://saezlab.github.io/iupred/</loc>
+         <lastmod>2026-01-22</lastmod>
+    </url>
+    <url>
+         <loc>https://saezlab.github.io/iupred/reference/</loc>
+         <lastmod>2026-01-22</lastmod>
+    </url>
+    <url>
+         <loc>https://saezlab.github.io/iupred/tutorials/batch_prediction/</loc>
+         <lastmod>2026-01-22</lastmod>
+    </url>
+    <url>
+         <loc>https://saezlab.github.io/iupred/tutorials/low_memory/</loc>
+         <lastmod>2026-01-22</lastmod>
+    </url>
+    <url>
+         <loc>https://saezlab.github.io/iupred/tutorials/single_sequence/</loc>
+         <lastmod>2026-01-22</lastmod>
+    </url>
+</urlset>

@@ -1,0 +1,2766 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://saezlab.github.io/iupred/reference/">
+      
+      
+        <link rel="prev" href="../tutorials/low_memory/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Reference - iupred</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Lato";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="iupred" class="md-header__button md-logo" aria-label="iupred" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            iupred
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="light-blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="light-blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="iupred" class="md-nav__button md-logo" aria-label="iupred" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    iupred
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorials
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorials
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/single_sequence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Single Sequence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/batch_prediction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Batch Prediction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/low_memory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Low-Memory Mode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#iupred2-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IUPred2 Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IUPred2 Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred.iupred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iupred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.anchor2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        anchor2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aiupred-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIUPred Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AIUPred Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-processing-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Processing API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.init_aiupred_models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        init_aiupred_models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.predict_aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict_aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.predict_aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict_aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-memory-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-Memory API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.low_memory_aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        low_memory_aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.low_memory_aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        low_memory_aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred.ensure_aiupred_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ensure_aiupred_data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.clear_aiupred_cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear_aiupred_cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred2-cli-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IUPred2 CLI Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aiupred-cli-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIUPred CLI Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#iupred2-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IUPred2 Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IUPred2 Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred.iupred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        iupred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.anchor2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        anchor2
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aiupred-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIUPred Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AIUPred Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#simple-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simple API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#batch-processing-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Batch Processing API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.init_aiupred_models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        init_aiupred_models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.predict_aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict_aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.predict_aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        predict_aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#low-memory-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Low-Memory API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.low_memory_aiupred_disorder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        low_memory_aiupred_disorder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.low_memory_aiupred_binding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        low_memory_aiupred_binding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred.ensure_aiupred_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ensure_aiupred_data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iupred.clear_aiupred_cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear_aiupred_cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iupred2-cli-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IUPred2 CLI Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aiupred-cli-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AIUPred CLI Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="api-reference">API Reference<a class="headerlink" href="#api-reference" title="Permanent link">&para;</a></h1>
+<p>This page documents the public API of the <code>iupred</code> package.</p>
+<h2 id="iupred2-functions">IUPred2 Functions<a class="headerlink" href="#iupred2-functions" title="Permanent link">&para;</a></h2>
+<p>Energy-based prediction of intrinsically disordered regions.</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.iupred" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">iupred</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;short&#39;</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#iupred.iupred" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict intrinsically disordered regions using IUPred2.</p>
+<p>IUPred2 estimates the energy required to form stabilizing contacts
+for each residue. Residues with high energy (unable to form stable
+contacts) are predicted as disordered.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>seq</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string. Standard one-letter amino
+acid codes are expected. Unknown residues are handled gracefully.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>mode</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Prediction mode. Options:</p>
+<ul>
+<li><code>'short'</code>: Optimized for short disordered segments (default)</li>
+<li><code>'long'</code>: Identifies extended disordered regions</li>
+<li><code>'glob'</code>: Globular domain prediction with domain annotations</li>
+</ul>
+              </div>
+            </td>
+            <td>
+                  <code>&#39;short&#39;</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>folder</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to data directory containing energy matrices and
+histograms. Defaults to the bundled data shipped with the package.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>A tuple of <code>(iupred_scores, glob_text)</code> where:</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>iupred_scores</code>: List of disorder propensity values (0.0-1.0)
+for each residue. Values above 0.5 indicate disorder.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <ul>
+<li><code>glob_text</code>: Domain annotation string (non-empty only for
+<code>mode='glob'</code>). Contains identified globular domains and
+their boundaries.</li>
+</ul>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import iupred
+scores, glob = iupred('MEEPQSDPSVEPPLSQETFSDLWK', mode='long')
+len(scores)
+24
+scores[0] &gt; 0.5  # First residue is disordered
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+<details class="references" open>
+  <summary>References</summary>
+  <p>Meszaros B, Erdos G, Dosztanyi Z. IUPred2A: context-dependent
+prediction of protein disorder. Nucleic Acids Res. 2018.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.anchor2" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">anchor2</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">iupred_scores</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#iupred.anchor2" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict disordered binding regions using ANCHOR2.</p>
+<p>ANCHOR2 identifies disordered regions that are likely to undergo
+disorder-to-order transition upon binding to a partner protein.
+These regions are intrinsically disordered but can fold when
+interacting with globular protein partners.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>seq</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string. Must match the sequence
+used to generate <code>iupred_scores</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>iupred_scores</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>IUPred disorder scores for the sequence, obtained
+from the :func:<code>iupred</code> function. The scores are used to
+identify regions that are both disordered and likely to bind.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>folder</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Path to data directory containing ANCHOR2 matrices.
+Defaults to the bundled data shipped with the package.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of ANCHOR2 binding propensity scores (0.0-1.0) for each</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>residue. Values above 0.5 indicate predicted binding regions.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import iupred, anchor2
+sequence = 'MEEPQSDPSVEPPLSQETFSDLWK'
+disorder_scores, _ = iupred(sequence)
+binding_scores = anchor2(sequence, disorder_scores)
+len(binding_scores)
+24</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+<details class="references" open>
+  <summary>References</summary>
+  <p>Meszaros B, Erdos G, Dosztanyi Z. IUPred2A: context-dependent
+prediction of protein disorder. Nucleic Acids Res. 2018.</p>
+</details>
+
+    </div>
+
+</div><h2 id="aiupred-functions">AIUPred Functions<a class="headerlink" href="#aiupred-functions" title="Permanent link">&para;</a></h2>
+<p>Transformer-based deep learning prediction of disordered regions.</p>
+<h3 id="simple-api">Simple API<a class="headerlink" href="#simple-api" title="Permanent link">&para;</a></h3>
+<p>For single sequence predictions, use these convenience functions:</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.aiupred_disorder" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">aiupred_disorder</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">force_cpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gpu_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+<a href="#iupred.aiupred_disorder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict intrinsically disordered regions using AIUPred.</p>
+<p>AIUPred combines energy estimation with deep learning (transformer
+networks) for enhanced disorder prediction. It generally provides
+more accurate predictions than IUPred2, especially for complex cases.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Model weights (~82 MB) are automatically downloaded on first use
+and cached in <code>~/.cache/iupred/</code>.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string. Standard one-letter
+amino acid codes are expected. Unknown residues (e.g., 'X')
+are handled gracefully.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>force_cpu</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, force CPU-only mode even if a GPU is
+available. Useful for debugging or when GPU memory is limited.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gpu_num</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Index of the GPU to use when multiple GPUs are available.
+Default is 0 (first GPU).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Disorder propensity scores (0.0-1.0) for each</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>residue. Values above 0.5 indicate predicted disorder. Results</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>are smoothed using a Savitzky-Golay filter.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import aiupred_disorder
+scores = aiupred_disorder('MEEPQSDPSVEPPLSQETFSDLWK')
+len(scores)
+24
+scores[0] &gt; 0.5  # First residue is disordered
+True</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+<details class="references" open>
+  <summary>References</summary>
+  <p>Erdos G, Dosztanyi Z. AIUPred: combining energy estimation with
+deep learning for the enhanced prediction of protein disorder.
+Nucleic Acids Res. 2024.</p>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.aiupred_binding" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">aiupred_binding</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">force_cpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gpu_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+<a href="#iupred.aiupred_binding" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict disordered binding regions using AIUPred.</p>
+<p>AIUPred-binding identifies disordered regions that are likely to
+undergo disorder-to-order transition upon binding to partner proteins.
+It uses energy embedding from a transformer network to predict
+binding propensity.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Model weights (~82 MB) are automatically downloaded on first use
+and cached in <code>~/.cache/iupred/</code>.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string. Standard one-letter
+amino acid codes are expected. Unknown residues (e.g., 'X')
+are handled gracefully.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>force_cpu</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, force CPU-only mode even if a GPU is
+available. Useful for debugging or when GPU memory is limited.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gpu_num</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Index of the GPU to use when multiple GPUs are available.
+Default is 0 (first GPU).</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Binding propensity scores (0.0-1.0) for each</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>residue. Values above 0.5 indicate predicted binding regions.</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Results are smoothed using a Savitzky-Golay filter.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import aiupred_binding
+scores = aiupred_binding('MEEPQSDPSVEPPLSQETFSDLWK')
+len(scores)
+24</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+<details class="references" open>
+  <summary>References</summary>
+  <p>Erdos G, Deutsch A, Dosztanyi Z. Identification of disordered
+binding regions using energy embedding. J Mol Biol. 2025.</p>
+</details>
+
+    </div>
+
+</div><h3 id="batch-processing-api">Batch Processing API<a class="headerlink" href="#batch-processing-api" title="Permanent link">&para;</a></h3>
+<p>For efficient processing of multiple sequences, initialize models once
+and reuse them:</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.init_aiupred_models" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">init_aiupred_models</span><span class="p">(</span><span class="n">prediction_type</span><span class="p">,</span> <span class="n">force_cpu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">gpu_num</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></code>
+
+<a href="#iupred.init_aiupred_models" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Initialize networks and device to run on.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>prediction_type</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Type of prediction ('disorder' or 'binding').</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>force_cpu</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Force the method to run on CPU only mode.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>gpu_num</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Index of the GPU to use, default=0.</p>
+              </div>
+            </td>
+            <td>
+                  <code>0</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tuple of (embedding_model, regression_model, device).</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ImportError">ImportError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If PyTorch is not installed.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.predict_aiupred_disorder" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">predict_aiupred_disorder</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">energy_model</span><span class="p">,</span> <span class="n">regression_model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+
+<a href="#iupred.predict_aiupred_disorder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict disorder propensity using pre-initialized models.</p>
+<p>This function is useful for batch processing multiple sequences
+efficiently, as the models are initialized once and reused.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>energy_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized transformer model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>regression_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized regression model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>PyTorch device (CPU or CUDA) from :func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>smoothing</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, apply Savitzky-Golay filter to smooth
+the output. Default is <code>None</code> (no smoothing).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Disorder propensity scores (0.0-1.0) for each residue.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import init_aiupred_models, predict_aiupred_disorder
+model, reg, device = init_aiupred_models('disorder')
+for seq in sequences:
+...     scores = predict_aiupred_disorder(seq, model, reg, device, smoothing=True)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.predict_aiupred_binding" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">predict_aiupred_binding</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="n">decoder_model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">energy_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">binding</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></code>
+
+<a href="#iupred.predict_aiupred_binding" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict binding propensity using pre-initialized models.</p>
+<p>This function is useful for batch processing multiple sequences
+efficiently, as the models are initialized once and reused.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>embedding_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized embedding model from
+:func:<code>init_aiupred_models</code> with <code>prediction_type='binding'</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>decoder_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized decoder model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>PyTorch device (CPU or CUDA) from :func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>smoothing</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, apply Savitzky-Golay filter to smooth
+the output. Default is <code>None</code> (no smoothing).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>energy_only</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, return raw energy embeddings instead
+of binding predictions. Default is <code>False</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>binding</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, apply binding transformation to scores.
+Should be <code>True</code> for final binding predictions.</p>
+              </div>
+            </td>
+            <td>
+                  <code>False</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Binding propensity scores (0.0-1.0) for each residue</p>
+              </div>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>when <code>binding=True</code>, or raw predictions otherwise.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import init_aiupred_models, predict_aiupred_binding
+model, reg, device = init_aiupred_models('binding')
+scores = predict_aiupred_binding(seq, model, reg, device, binding=True, smoothing=True)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div><h3 id="low-memory-api">Low-Memory API<a class="headerlink" href="#low-memory-api" title="Permanent link">&para;</a></h3>
+<p>For very long sequences or memory-constrained systems, use chunked processing:</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.low_memory_aiupred_disorder" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">low_memory_aiupred_disorder</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="n">decoder_model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></code>
+
+<a href="#iupred.low_memory_aiupred_disorder" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict disorder using chunked processing for long sequences.</p>
+<p>This function processes sequences in overlapping chunks to reduce
+memory usage. Useful for very long sequences (&gt;3000 residues) or
+systems with limited GPU memory.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Results may differ slightly from the standard prediction due to
+chunk boundary effects.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>embedding_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized transformer model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>decoder_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized regression model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>PyTorch device (CPU or CUDA) from :func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>smoothing</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, apply Savitzky-Golay filter to smooth
+the output. Default is <code>None</code> (no smoothing).</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>chunk_len</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Length of each processing chunk. Default is 1000.
+Must be greater than 200 (the overlap size is 100).</p>
+              </div>
+            </td>
+            <td>
+                  <code>1000</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Disorder propensity scores (0.0-1.0) for each residue.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If chunk_len is less than or equal to 200.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import init_aiupred_models, low_memory_aiupred_disorder
+model, reg, device = init_aiupred_models('disorder')
+scores = low_memory_aiupred_disorder(long_sequence, model, reg, device, smoothing=True)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.low_memory_aiupred_binding" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">low_memory_aiupred_binding</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">embedding_model</span><span class="p">,</span> <span class="n">decoder_model</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">smoothing</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_len</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span></code>
+
+<a href="#iupred.low_memory_aiupred_binding" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Predict binding using chunked processing for long sequences.</p>
+<p>This function processes sequences in overlapping chunks to reduce
+memory usage. Useful for very long sequences (&gt;3000 residues) or
+systems with limited GPU memory.</p>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>Results may differ slightly from the standard prediction due to
+chunk boundary effects.</p>
+</details>
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>sequence</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Amino acid sequence as a string.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>embedding_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized embedding model from
+:func:<code>init_aiupred_models</code> with <code>prediction_type='binding'</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>decoder_model</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Pre-initialized decoder model from
+:func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>device</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>PyTorch device (CPU or CUDA) from :func:<code>init_aiupred_models</code>.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>smoothing</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If <code>True</code>, apply Savitzky-Golay filter to smooth
+the output. Default is <code>True</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>chunk_len</code>
+            </td>
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Length of each processing chunk. Default is 1000.
+Must be greater than 200 (the overlap size is 100).</p>
+              </div>
+            </td>
+            <td>
+                  <code>1000</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>numpy.ndarray: Binding propensity scores (0.0-1.0) for each residue.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="ValueError">ValueError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If chunk_len is less than or equal to 200.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import init_aiupred_models, low_memory_aiupred_binding
+model, reg, device = init_aiupred_models('binding')
+scores = low_memory_aiupred_binding(long_sequence, model, reg, device, smoothing=True)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div><h2 id="data-management">Data Management<a class="headerlink" href="#data-management" title="Permanent link">&para;</a></h2>
+<p>Functions for managing AIUPred model weights.</p>
+
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.ensure_aiupred_data" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">ensure_aiupred_data</span><span class="p">()</span></code>
+
+<a href="#iupred.ensure_aiupred_data" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Ensure AIUPred model weights are available, downloading if necessary.</p>
+<p>This function checks if all required AIUPred model files are present
+in the cache directory. If not, it downloads and extracts them from
+the remote server (~82 MB download).</p>
+<p>The data is cached in a platform-specific location:</p>
+<ul>
+<li>Linux: <code>~/.cache/iupred/</code></li>
+<li>macOS: <code>~/Library/Caches/iupred/</code></li>
+<li>Windows: <code>%LOCALAPPDATA%\\iupred\\Cache</code></li>
+</ul>
+
+
+<details class="note" open>
+  <summary>Note</summary>
+  <p>This function is called automatically by :func:<code>aiupred_disorder</code>
+and :func:<code>aiupred_binding</code>. You only need to call it explicitly
+if you want to pre-download the models (e.g., for offline use).</p>
+</details>
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>pathlib.Path: Path to the cache directory containing the model files.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="RuntimeError">RuntimeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>If download or extraction fails.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import ensure_aiupred_data
+cache_dir = ensure_aiupred_data()
+print(cache_dir)
+/home/user/.cache/iupred</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h3 id="iupred.clear_aiupred_cache" class="doc doc-heading">
+            <code class="highlight language-python"><span class="n">iupred</span><span class="o">.</span><span class="n">clear_aiupred_cache</span><span class="p">()</span></code>
+
+<a href="#iupred.clear_aiupred_cache" class="headerlink" title="Permanent link">&para;</a></h3>
+
+
+    <div class="doc doc-contents first">
+
+        <p>Remove all cached AIUPred model files.</p>
+<p>Deletes all AIUPred model weights from the cache directory, freeing
+approximately 82 MB of disk space. The models will be re-downloaded
+automatically on the next call to :func:<code>aiupred_disorder</code> or
+:func:<code>aiupred_binding</code>.</p>
+<p>This can be useful to:</p>
+<ul>
+<li>Free up disk space</li>
+<li>Force re-download of potentially corrupted files</li>
+<li>Update to newer model versions (when available)</li>
+</ul>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <blockquote>
+<blockquote>
+<blockquote>
+<p>from iupred import clear_aiupred_cache
+clear_aiupred_cache()</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</details>
+
+    </div>
+
+</div><h2 id="command-line-interface">Command-Line Interface<a class="headerlink" href="#command-line-interface" title="Permanent link">&para;</a></h2>
+<p>The package provides a command-line interface for running predictions
+from the terminal:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># IUPred2 prediction</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>iupred<span class="w"> </span>iupred2<span class="w"> </span>-i<span class="w"> </span>sequences.fasta<span class="w"> </span>-o<span class="w"> </span>results.txt<span class="w"> </span>-m<span class="w"> </span>long<span class="w"> </span>-a
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># AIUPred prediction</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>iupred<span class="w"> </span>aiupred<span class="w"> </span>-i<span class="w"> </span>sequences.fasta<span class="w"> </span>-o<span class="w"> </span>results.txt<span class="w"> </span>-b<span class="w"> </span>--force-cpu
+</span></code></pre></div>
+<h3 id="iupred2-cli-options">IUPred2 CLI Options<a class="headerlink" href="#iupred2-cli-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i, --input-file</code></td>
+<td>Input FASTA file (required)</td>
+</tr>
+<tr>
+<td><code>-o, --output-file</code></td>
+<td>Output file (default: stdout)</td>
+</tr>
+<tr>
+<td><code>-m, --mode</code></td>
+<td>Prediction mode: short, long, or glob (default: long)</td>
+</tr>
+<tr>
+<td><code>-a, --anchor</code></td>
+<td>Also predict binding regions with ANCHOR2</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Enable verbose output</td>
+</tr>
+</tbody>
+</table>
+<h3 id="aiupred-cli-options">AIUPred CLI Options<a class="headerlink" href="#aiupred-cli-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-i, --input-file</code></td>
+<td>Input FASTA file (required)</td>
+</tr>
+<tr>
+<td><code>-o, --output-file</code></td>
+<td>Output file (default: stdout)</td>
+</tr>
+<tr>
+<td><code>-b, --binding</code></td>
+<td>Also predict binding regions</td>
+</tr>
+<tr>
+<td><code>-g, --gpu</code></td>
+<td>GPU index to use (default: 0)</td>
+</tr>
+<tr>
+<td><code>--force-cpu</code></td>
+<td>Force CPU-only mode</td>
+</tr>
+<tr>
+<td><code>--low-memory</code></td>
+<td>Use low-memory mode for long sequences</td>
+</tr>
+<tr>
+<td><code>--chunk-size</code></td>
+<td>Chunk size for low-memory mode (default: 1000)</td>
+</tr>
+<tr>
+<td><code>-v, --verbose</code></td>
+<td>Enable verbose output</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../tutorials/low_memory/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Low-Memory Mode">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Low-Memory Mode
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © Copyright 2021-2026, ELTE / Saez-lab.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.copy", "content.action.edit", "navigation.instant", "navigation.footer"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
