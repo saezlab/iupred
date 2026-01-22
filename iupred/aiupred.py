@@ -20,6 +20,7 @@ try:
     from torch import Tensor, nn
     from torch.nn import TransformerEncoder, TransformerEncoderLayer
     from torch.nn.functional import pad
+
     _TORCH_AVAILABLE = True
 except ImportError as e:
     _TORCH_IMPORT_ERROR = e
@@ -81,8 +82,10 @@ WINDOW = 100
 if _TORCH_AVAILABLE:
     _ModuleBase = nn.Module
 else:
+
     class _ModuleBase:
         """Placeholder base class when torch is not available."""
+
         pass
 
 
