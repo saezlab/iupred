@@ -1,7 +1,5 @@
 """Tests for optional torch dependency handling."""
 
-from unittest import mock
-
 import pytest
 
 
@@ -92,7 +90,7 @@ class TestOptionalTorch:
 
     def test_iupred2_works_independently(self):
         """IUPred2 functions should work regardless of torch availability."""
-        from iupred import iupred, anchor2
+        from iupred import iupred
 
         sequence = 'MAEGEITTFTALTEKFNLPPGNYKKPKLLYCSNG'
         scores, _ = iupred(sequence, mode='long')
