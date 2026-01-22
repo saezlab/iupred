@@ -1,5 +1,6 @@
 # IUPred
 
+[![GitHub release](https://img.shields.io/github/v/release/saezlab/iupred)](https://github.com/saezlab/iupred/releases/latest)
 [![Tests](https://github.com/saezlab/iupred/actions/workflows/ci-testing-unit.yml/badge.svg)](https://github.com/saezlab/iupred/actions/workflows/ci-testing-unit.yml)
 [![Documentation](https://github.com/saezlab/iupred/actions/workflows/ci-docs.yml/badge.svg)](https://github.com/saezlab/iupred/actions/workflows/ci-docs.yml)
 
