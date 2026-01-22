@@ -86,14 +86,42 @@ def read_seq(fasta_file):
 def iupred(seq, mode='short', folder=None):
     """Predict intrinsically disordered regions using IUPred2.
 
+    IUPred2 estimates the energy required to form stabilizing contacts
+    for each residue. Residues with high energy (unable to form stable
+    contacts) are predicted as disordered.
+
     Args:
-        seq: Amino acid sequence string.
-        mode: Prediction mode - 'short', 'long', or 'glob'.
-        folder: Path to data directory. Defaults to bundled data.
+        seq: Amino acid sequence as a string. Standard one-letter amino
+            acid codes are expected. Unknown residues are handled gracefully.
+        mode: Prediction mode. Options:
+
+            - ``'short'``: Optimized for short disordered segments (default)
+            - ``'long'``: Identifies extended disordered regions
+            - ``'glob'``: Globular domain prediction with domain annotations
+
+        folder: Path to data directory containing energy matrices and
+            histograms. Defaults to the bundled data shipped with the package.
 
     Returns:
-        Tuple of (iupred_scores, glob_text) where iupred_scores is a list
-        of disorder propensity values (0-1) for each residue.
+        A tuple of ``(iupred_scores, glob_text)`` where:
+
+        - ``iupred_scores``: List of disorder propensity values (0.0-1.0)
+          for each residue. Values above 0.5 indicate disorder.
+        - ``glob_text``: Domain annotation string (non-empty only for
+          ``mode='glob'``). Contains identified globular domains and
+          their boundaries.
+
+    Example:
+        >>> from iupred import iupred
+        >>> scores, glob = iupred('MEEPQSDPSVEPPLSQETFSDLWK', mode='long')
+        >>> len(scores)
+        24
+        >>> scores[0] > 0.5  # First residue is disordered
+        True
+
+    References:
+        Meszaros B, Erdos G, Dosztanyi Z. IUPred2A: context-dependent
+        prediction of protein disorder. Nucleic Acids Res. 2018.
     """
     if folder is None:
         folder = DATA_DIR
@@ -221,15 +249,37 @@ def iupred(seq, mode='short', folder=None):
 
 
 def anchor2(seq, iupred_scores, folder=None):
-    """Predict protein binding regions using ANCHOR2.
+    """Predict disordered binding regions using ANCHOR2.
+
+    ANCHOR2 identifies disordered regions that are likely to undergo
+    disorder-to-order transition upon binding to a partner protein.
+    These regions are intrinsically disordered but can fold when
+    interacting with globular protein partners.
 
     Args:
-        seq: Amino acid sequence string.
-        iupred_scores: IUPred disorder scores for the sequence.
-        folder: Path to data directory. Defaults to bundled data.
+        seq: Amino acid sequence as a string. Must match the sequence
+            used to generate ``iupred_scores``.
+        iupred_scores: IUPred disorder scores for the sequence, obtained
+            from the :func:`iupred` function. The scores are used to
+            identify regions that are both disordered and likely to bind.
+        folder: Path to data directory containing ANCHOR2 matrices.
+            Defaults to the bundled data shipped with the package.
 
     Returns:
-        List of ANCHOR2 binding propensity scores (0-1) for each residue.
+        List of ANCHOR2 binding propensity scores (0.0-1.0) for each
+        residue. Values above 0.5 indicate predicted binding regions.
+
+    Example:
+        >>> from iupred import iupred, anchor2
+        >>> sequence = 'MEEPQSDPSVEPPLSQETFSDLWK'
+        >>> disorder_scores, _ = iupred(sequence)
+        >>> binding_scores = anchor2(sequence, disorder_scores)
+        >>> len(binding_scores)
+        24
+
+    References:
+        Meszaros B, Erdos G, Dosztanyi Z. IUPred2A: context-dependent
+        prediction of protein disorder. Nucleic Acids Res. 2018.
     """
     if folder is None:
         folder = DATA_DIR

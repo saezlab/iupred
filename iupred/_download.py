@@ -111,19 +111,34 @@ def _download_and_extract():
 
 
 def ensure_aiupred_data():
-    """Ensure AIUPred data files are available, downloading if necessary.
+    """Ensure AIUPred model weights are available, downloading if necessary.
 
     This function checks if all required AIUPred model files are present
     in the cache directory. If not, it downloads and extracts them from
-    the remote archive.
+    the remote server (~82 MB download).
 
-    The data is cached in ~/.cache/iupred/ and only downloaded once.
+    The data is cached in a platform-specific location:
+
+    - Linux: ``~/.cache/iupred/``
+    - macOS: ``~/Library/Caches/iupred/``
+    - Windows: ``%LOCALAPPDATA%\\iupred\\Cache``
+
+    Note:
+        This function is called automatically by :func:`aiupred_disorder`
+        and :func:`aiupred_binding`. You only need to call it explicitly
+        if you want to pre-download the models (e.g., for offline use).
 
     Returns:
-        Path to the cache directory containing the data files.
+        pathlib.Path: Path to the cache directory containing the model files.
 
     Raises:
         RuntimeError: If download or extraction fails.
+
+    Example:
+        >>> from iupred import ensure_aiupred_data
+        >>> cache_dir = ensure_aiupred_data()
+        >>> print(cache_dir)
+        /home/user/.cache/iupred
     """
     if not _is_data_available():
         _download_and_extract()
@@ -157,9 +172,22 @@ def get_aiupred_file(filename):
 
 
 def clear_cache():
-    """Remove all cached AIUPred data files.
+    """Remove all cached AIUPred model files.
 
-    This can be useful if you need to re-download the data or free up space.
+    Deletes all AIUPred model weights from the cache directory, freeing
+    approximately 82 MB of disk space. The models will be re-downloaded
+    automatically on the next call to :func:`aiupred_disorder` or
+    :func:`aiupred_binding`.
+
+    This can be useful to:
+
+    - Free up disk space
+    - Force re-download of potentially corrupted files
+    - Update to newer model versions (when available)
+
+    Example:
+        >>> from iupred import clear_aiupred_cache
+        >>> clear_aiupred_cache()
     """
     if CACHE_DIR.exists():
         for f in AIUPRED_FILES:

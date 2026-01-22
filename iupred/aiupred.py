@@ -391,8 +391,42 @@ def init_models(prediction_type, force_cpu=False, gpu_num=0):
 
 
 def aiupred_disorder(sequence, force_cpu=False, gpu_num=0):
-    """Library function to carry out single sequence analysis
-    :param sequence: Amino acid sequence in a string
+    """Predict intrinsically disordered regions using AIUPred.
+
+    AIUPred combines energy estimation with deep learning (transformer
+    networks) for enhanced disorder prediction. It generally provides
+    more accurate predictions than IUPred2, especially for complex cases.
+
+    Note:
+        Model weights (~82 MB) are automatically downloaded on first use
+        and cached in ``~/.cache/iupred/``.
+
+    Args:
+        sequence: Amino acid sequence as a string. Standard one-letter
+            amino acid codes are expected. Unknown residues (e.g., 'X')
+            are handled gracefully.
+        force_cpu: If ``True``, force CPU-only mode even if a GPU is
+            available. Useful for debugging or when GPU memory is limited.
+        gpu_num: Index of the GPU to use when multiple GPUs are available.
+            Default is 0 (first GPU).
+
+    Returns:
+        numpy.ndarray: Disorder propensity scores (0.0-1.0) for each
+        residue. Values above 0.5 indicate predicted disorder. Results
+        are smoothed using a Savitzky-Golay filter.
+
+    Example:
+        >>> from iupred import aiupred_disorder
+        >>> scores = aiupred_disorder('MEEPQSDPSVEPPLSQETFSDLWK')
+        >>> len(scores)
+        24
+        >>> scores[0] > 0.5  # First residue is disordered
+        True
+
+    References:
+        Erdos G, Dosztanyi Z. AIUPred: combining energy estimation with
+        deep learning for the enhanced prediction of protein disorder.
+        Nucleic Acids Res. 2024.
     """
     embedding_model, reg_model, device = init_models(
         'disorder', force_cpu, gpu_num
@@ -403,8 +437,40 @@ def aiupred_disorder(sequence, force_cpu=False, gpu_num=0):
 
 
 def aiupred_binding(sequence, force_cpu=False, gpu_num=0):
-    """Library function to carry out single sequence analysis
-    :param sequence: Amino acid sequence in a string
+    """Predict disordered binding regions using AIUPred.
+
+    AIUPred-binding identifies disordered regions that are likely to
+    undergo disorder-to-order transition upon binding to partner proteins.
+    It uses energy embedding from a transformer network to predict
+    binding propensity.
+
+    Note:
+        Model weights (~82 MB) are automatically downloaded on first use
+        and cached in ``~/.cache/iupred/``.
+
+    Args:
+        sequence: Amino acid sequence as a string. Standard one-letter
+            amino acid codes are expected. Unknown residues (e.g., 'X')
+            are handled gracefully.
+        force_cpu: If ``True``, force CPU-only mode even if a GPU is
+            available. Useful for debugging or when GPU memory is limited.
+        gpu_num: Index of the GPU to use when multiple GPUs are available.
+            Default is 0 (first GPU).
+
+    Returns:
+        numpy.ndarray: Binding propensity scores (0.0-1.0) for each
+        residue. Values above 0.5 indicate predicted binding regions.
+        Results are smoothed using a Savitzky-Golay filter.
+
+    Example:
+        >>> from iupred import aiupred_binding
+        >>> scores = aiupred_binding('MEEPQSDPSVEPPLSQETFSDLWK')
+        >>> len(scores)
+        24
+
+    References:
+        Erdos G, Deutsch A, Dosztanyi Z. Identification of disordered
+        binding regions using energy embedding. J Mol Biol. 2025.
     """
     embedding_model, reg_model, device = init_models(
         'binding', force_cpu, gpu_num

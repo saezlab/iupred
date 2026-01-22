@@ -1,3 +1,1 @@
-# Welcome to IUPred
-
-This is the main documentation page.
+--8<-- "README.md"
